@@ -1,25 +1,10 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Routing from './Routing';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return <div className='min-h-screen h-auto bg-zinc-800 items-center justify-center flex flex-col'>
+ <Routing />
+  </div>;
 }
 
 export default App;
