@@ -1,9 +1,13 @@
 import React from "react";
-import { FaPlus } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { GrFormNextLink } from "react-icons/gr";
 const PersonalInfo = () => {
+    const navigate = useNavigate();
+    
+
   return (
-    <div className="h-screen w-full rounded-t-xl box-border py-5 px-4 border border-red-300 text-white flex flex-row bg-[#020817] justify-between items-center">
-      <div className="border border-red-300 w-[50%] h-full box-border py-4 px-3">
+    <div className="h-screen w-full rounded-t-xl box-border py-5 px-4 text-white flex flex-row bg-[#020817] justify-between items-center">
+      <div className=" w-[50%] h-full box-border py-4 px-3">
         <h3 className="text-white font-bold text-xl font-poppins">Bill From:</h3>
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-4">
@@ -84,10 +88,9 @@ const PersonalInfo = () => {
           </div>
           
         </div>
-        <button className="font-poppins font-semibold text-white flex w-40 h-6 items-center justify-between"><FaPlus/> Add custom input</button>
       </div>
-      <div className="border border-red-300 w-[50%] h-full">
-      <div className="border border-red-300  h-full box-border py-4 px-3">
+      <div className=" w-[50%] h-full">
+      <div className=" h-full box-border py-4 px-3">
         <h3 className="text-white font-bold text-xl font-poppins">Bill To:</h3>
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-4">
@@ -166,7 +169,15 @@ const PersonalInfo = () => {
               className="bg-[#020817] border border-gray-600 rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-60  placeholder:font-poppins"
             />
           </div>
-          <button className="font-poppins font-semibold text-white flex w-40 h-6 items-center justify-between"><FaPlus/> Add custom input</button>
+         
+          <button 
+            type="button" 
+            onClick={() => navigate('/invoice-details')}
+            className="bg-white hover:bg-zinc-200 mt-12 w-48 flex justify-around items-center text-[#020817] font-bold py-2 px-4 rounded"
+          >
+            Next <GrFormNextLink className="text-2xl" />
+          </button>
+
         </div>
       </div>
       </div>
