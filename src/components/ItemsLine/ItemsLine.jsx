@@ -1,5 +1,5 @@
 import React from "react";
-
+import { FaPlus } from "react-icons/fa6";
 const ItemsLine = () => {
   return (
     <div className="h-screen w-full rounded-t-xl box-border py-5 px-4  text-white flex flex-col bg-[#020817]  items-left">
@@ -66,6 +66,8 @@ const ItemsLine = () => {
           ></textarea>
         </div>
       </div>
+      <button className="
+      flex flex-row items-center justify-center py-2 text-sm font-bold font-raleway mt-4 rounded-lg bg-white text-black w-[50%]"><FaPlus className="mx-2 text-sm"/>Add a new item</button>
     </div>
   );
 };
