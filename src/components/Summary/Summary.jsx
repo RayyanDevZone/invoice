@@ -17,14 +17,14 @@ const Summary = () => {
     }
   };
   return (
-    <div className="h-screen w-full rounded-t-xl box-border py-5 px-4  text-white flex flex-col bg-[#020817]  items-left">
+    <div className="min-h-screen h-auto w-full rounded-t-xl box-border py-5 px-4  text-white flex flex-col bg-[#020817]  items-left">
       <h1> this is summary PAGE</h1>
       <div>
         <p className="text-white font-medium font-poppins  mt-8">Signature:</p>
         <div className="relative flex items-left justify-left mb-5">
           <input
             id="signature-upload"
-            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            className="absolute inset-0 w-[15rem] h-full opacity-0 cursor-pointer"
             type="file"
             accept=".jpg, .jpeg, .png"
             onChange={handleImageUpload}
