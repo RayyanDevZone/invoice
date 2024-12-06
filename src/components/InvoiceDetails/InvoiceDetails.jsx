@@ -1,7 +1,9 @@
 import React from "react";
 import { LuImagePlus } from "react-icons/lu";
-
+import { useNavigate } from "react-router-dom";
+import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
 const InvoiceDetails = () => {
+  const navigate = useNavigate();
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -16,7 +18,7 @@ const InvoiceDetails = () => {
       <p className="text-white font-medium font-poppins  mt-8">Invoice Logo:</p>
       <div className="relative flex items-left justify-left">
         <input
-          id="file-upload"
+          id="logo-upload"
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           type="file"
           accept=".jpg, .jpeg, .png"
@@ -40,6 +42,23 @@ const InvoiceDetails = () => {
               className="bg-[#020817] border border-gray-600 rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-60  placeholder:font-poppins"
             />
           </div>
+          <div className="flex flex-row w-auto justify-end ">
+      <button
+          type="button"
+          onClick={() => navigate("/personal-info")}
+          className="bg-white hover:bg-zinc-200 mt-12 w-36 flex justify-around items-center text-[#020817] font-bold py-2 px-4 rounded"
+        >
+          <GrFormPreviousLink className="text-2xl"/> Back 
+        </button>
+        {" "}
+        <button
+          type="button"
+          onClick={() => navigate("/itemsLine")}
+          className="bg-white hover:bg-zinc-200 mt-12 w-36 mx-4 flex justify-around items-center text-[#020817] font-bold py-2 px-4 rounded"
+        >
+          Next <GrFormNextLink className="text-2xl" />
+        </button>
+      </div>
     </div>
   );
 };
