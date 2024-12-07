@@ -13,7 +13,7 @@ const InvoiceDetails = () => {
     }
   };
   return (
-    <div className="h-screen w-full rounded-t-xl box-border py-5 px-4 border border-red-300 text-white flex flex-col bg-[#020817]  items-left">
+    <div className="h-screen w-full rounded-t-xl box-border py-5 px-4  text-white flex flex-col bg-[#020817]  items-left">
       <h1 className="font-semibold text-white text-2xl"> Invoice Details:</h1>
       <p className="text-white font-medium font-poppins  mt-8">Invoice Logo:</p>
       <div className="relative flex items-left justify-left">
