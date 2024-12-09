@@ -4,7 +4,10 @@ import DiscountField from "../DiscountField/DiscountField";
 import TaxField from "../TaxField/TaxField";
 import { useState } from "react";
 import ShippingField from "../ShippingField/ShippingField";
+import { useNavigate } from "react-router-dom";
+import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
 const Summary = () => {
+  const navigate = useNavigate();
   const [isDiscountEnabled, setIsDiscountEnabled] = useState(false);
   const [isTaxEnabled, setIsTaxEnabled] = useState(false);
   const [isShippingEnabled, setIsShippingEnabled] = useState(false);
@@ -18,7 +21,6 @@ const Summary = () => {
   };
   return (
     <div className="min-h-screen h-auto w-full rounded-t-xl box-border py-5 px-4  text-white flex flex-col bg-[#020817]  items-left">
-      <h1> this is summary PAGE</h1>
       <div>
         <p className="text-white font-medium font-poppins  mt-8">Signature:</p>
         <div className="relative flex items-left justify-left mb-5">
@@ -92,6 +94,22 @@ const Summary = () => {
             className="bg-[#020817] border border-[#1E293B]  rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-80  placeholder:font-raleway"
           ></textarea>
         </div>
+      </div>
+      <div className="flex flex-row w-auto justify-end ">
+        <button
+          type="button"
+          onClick={() => navigate("/paymentInfo")}
+          className="bg-white hover:bg-zinc-200 mt-12 w-36 flex justify-around items-center text-[#020817] font-bold py-2 px-4 rounded"
+        >
+          <GrFormPreviousLink className="text-2xl" /> Back
+        </button>
+        <button
+          type="button"
+          onClick={() => navigate("/invoice")}
+          className="bg-white hover:bg-zinc-200 mt-12 w-36 mx-4 flex justify-around items-center text-[#020817] font-bold py-2 px-4 rounded"
+        >
+          Next <GrFormNextLink className="text-2xl" />
+        </button>
       </div>
     </div>
   );
