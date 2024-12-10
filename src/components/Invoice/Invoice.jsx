@@ -71,7 +71,7 @@ const Invoice = () => {
           </tbody>
         </table>
       </div>
-      <div className="total&subtotal h-[150px] border border-gray-950 w-full flex flex-col justify-center items-end font-lexend">
+      <div className="total&subtotal h-[150px]  w-full flex flex-col justify-center items-end font-lexend">
         <div className="subtotal border flex items-center justify-center h-[33%] min-w-64 w-auto">
           <p className="font-bold text-gray-800">Subtotal:</p>
         </div>
@@ -82,13 +82,20 @@ const Invoice = () => {
           <p className="font-bold text-gray-800">Total in words:</p>
         </div>
       </div>
-      <div className="additionalNotes w-full mt-3">
+      <div className="additionalNotes w-full mt-3 px-6">
         <h2 className=" font-bold text-blue-600">Additional Notes:</h2>
         <p className="mt-2">{/* User's additional notes will be displayed here */}</p>
       </div>
-      <div className="paymentTerms w-full mt-3">
+      <div className="paymentTerms w-full mt-3 px-6">
         <h2 className=" font-bold text-blue-600">Payment Terms:</h2>
         <p className="mt-2">{/* User's payment terms will be displayed here */}</p>
+      </div>
+      <div className="accountDetails h-36 w-full px-6 ">
+      <p className="font-bold  text-gray-800 ">Please send the payment to these details:</p>
+      <p className="font-semibold text-sm text-gray-800 ">Bank:</p>
+      <p className="font-semibold text-sm text-gray-800 ">Account Name:</p>
+      <p className="font-semibold text-sm text-gray-800 ">Account Number:</p>
+
       </div>
     </div>
   );
