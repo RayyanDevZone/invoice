@@ -5,13 +5,13 @@ import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
 const PaymentInfo = () => {
   const navigate = useNavigate();
   return (
-    <div className='h-screen w-full rounded-t-xl box-border py-5 px-4  text-white flex flex-col bg-[#020817]  items-left'>
+    <div className='h-screen w-full rounded-t-xl box-border py-5 px-4  text-white flex flex-col bg-[#020817]  items-left font-lexend'>
     
-      <h1 className='text-white text-2xl font-semibold font-raleway'> Payment Information:</h1>
+      <h1 className='text-white text-2xl font-semibold '> Payment Information:</h1>
      <div className='flex flex-row w-[70%] items-center justify-around'> <div className="flex flex-col items-left gap-2 mt-3">
             <label
               htmlFor="item-name"
-              className="text-sm font-poppins font-bold text-white w-20"
+              className="text-sm  font-bold text-white w-28"
             >
               Bank Name:
             </label>
@@ -20,13 +20,13 @@ const PaymentInfo = () => {
               id="bank-name"
               placeholder="Bank name"
               required
-              className="bg-[#020817] border border-[#1E293B]  rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64  placeholder:font-montserrat"
+              className="bg-[#020817] border border-[#1E293B]  rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64  "
             />
           </div>
           <div className="flex flex-col items-left gap-2 mt-3">
             <label
               htmlFor="item-name"
-              className="text-sm font-poppins font-bold text-white w-28"
+              className="text-sm  font-bold text-white w-28"
             >
               Account Name:
             </label>
@@ -35,13 +35,13 @@ const PaymentInfo = () => {
               id="account-name"
               placeholder="Account name"
               required
-              className="bg-[#020817] border border-[#1E293B]  rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64  placeholder:font-montserrat"
+              className="bg-[#020817] border border-[#1E293B]  rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64  "
             />
           </div>
           <div className="flex flex-col items-left gap-2 mt-3">
             <label
               htmlFor="item-name"
-              className="text-sm font-poppins font-bold text-white w-36"
+              className="text-sm  font-bold text-white w-36"
             >
               Account Number:
             </label>
@@ -50,7 +50,7 @@ const PaymentInfo = () => {
               id="accountNumber"
               placeholder="Account Number"
               required
-              className="bg-[#020817] border border-[#1E293B]  rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64  placeholder:font-montserrat"
+              className="bg-[#020817] border border-[#1E293B]  rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64  "
             />
           </div></div>
           <div className="flex flex-row w-auto justify-end ">

@@ -20,9 +20,9 @@ const InvoiceDetails = () => {
   };
 
   return (
-    <div className="h-screen w-full rounded-t-xl box-border py-5 px-4 text-white flex flex-col bg-[#020817] items-left">
+    <div className="h-screen w-full rounded-t-xl box-border py-5 px-4 text-white flex flex-col bg-[#020817] items-left font-lexend ">
       <h1 className="font-semibold text-white text-2xl">Invoice Details:</h1>
-      <p className="text-white font-medium font-poppins mt-8">Invoice Logo:</p>
+      <p className="text-white font-medium  mt-8">Invoice Logo:</p>
       <div className="relative flex items-left justify-left">
         <input
           id="logo-upload"
@@ -40,17 +40,17 @@ const InvoiceDetails = () => {
         </label>
       </div>
       <div className="flex items-center gap-4 mt-8">
-        <label htmlFor="invoiceNumber" className="text-sm font-poppins font-bold text-white w-28">Invoice Number:</label>
+        <label htmlFor="invoiceNumber" className="text-sm  font-bold text-white w-34">Invoice Number:</label>
         <input
           type="number"
           id="invoice"
           placeholder="Invoice number"
           required
-          className="bg-[#020817] border border-gray-600 rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-60 placeholder:font-poppins"
+          className="bg-[#020817] border border-gray-600 rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-60 "
         />
       </div>
       <div className="flex items-center gap-4 mt-8">
-        <label htmlFor="issueDate" className="text-sm font-poppins font-bold text-white w-28">Issue Date:</label>
+        <label htmlFor="issueDate" className="text-sm  font-bold text-white w-28">Issue Date:</label>
         <DatePicker
           id="issueDate"
           selected={issueDate}
@@ -60,7 +60,7 @@ const InvoiceDetails = () => {
         />
       </div>
       <div className="flex items-center gap-4 mt-8">
-        <label htmlFor="dueDate" className="text-sm font-poppins font-bold text-white w-28">Due Date:</label>
+        <label htmlFor="dueDate" className="text-sm  font-bold text-white w-28">Due Date:</label>
         <DatePicker
           id="dueDate"
           selected={dueDate}

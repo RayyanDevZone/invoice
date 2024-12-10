@@ -27,10 +27,10 @@ const ItemsLine = () => {
   };
 
   return (
-    <div className="min-h-screen h-auto w-full rounded-t-xl box-border py-5 px-4 text-white flex flex-col bg-[#020817] items-left">
+    <div className="min-h-screen h-auto w-full rounded-t-xl box-border py-5 px-4 text-white flex flex-col bg-[#020817] items-left font-lexend">
       {items.map((item, index) => (
         <div key={index} className="w-[85%] h-[70%] bg-slate-800 border border-slate-500 justify-between flex flex-col rounded-lg px-8 py-4 mb-4">
-          <p className="text-md font-poppins font-bold text-white flex flex-row w-full justify-between">
+          <p className="text-md  font-bold text-white flex flex-row w-full justify-between">
             {item.itemName || `#${index + 1}-NAME`}
             <div className="text-xl cursor-pointer" onClick={() => removeItem(index)}>
               <RxCross2 />
@@ -40,7 +40,7 @@ const ItemsLine = () => {
             <div className="flex flex-col items-left gap-2 mt-3">
               <label
                 htmlFor={`item-name-${index}`}
-                className="text-sm font-poppins font-bold text-white w-20"
+                className="text-sm  font-bold text-white w-20"
               >
                 Name :
               </label>
@@ -51,13 +51,13 @@ const ItemsLine = () => {
                 required
                 value={item.itemName}
                 onChange={(e) => handleInputChange(index, 'itemName', e.target.value)}
-                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40 placeholder:font-montserrat"
+                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40 "
               />
             </div>
             <div className="flex flex-col items-left gap-2 mt-3">
               <label
                 htmlFor={`item-quantity-${index}`}
-                className="text-sm font-poppins font-bold text-white w-20"
+                className="text-sm  font-bold text-white w-20"
               >
                 Quantity:
               </label>
@@ -68,13 +68,13 @@ const ItemsLine = () => {
                 required
                 value={item.quantity}
                 onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
-                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40 placeholder:font-montserrat"
+                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40 "
               />
             </div>
             <div className="flex flex-col items-left gap-2 mt-3">
               <label
                 htmlFor={`item-rate-${index}`}
-                className="text-sm font-poppins font-bold text-white w-20"
+                className="text-sm  font-bold text-white w-20"
               >
                 Rate :
               </label>
@@ -85,13 +85,13 @@ const ItemsLine = () => {
                 required
                 value={item.rate}
                 onChange={(e) => handleInputChange(index, 'rate', e.target.value)}
-                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40 placeholder:font-montserrat"
+                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40 "
               />
             </div>
           </div>
           <div className="flex flex-col mt-4">
-            <p className="text-sm font-poppins font-bold text-white">Total</p>
-            <p className="text-lg font-poppins font-bold text-white">{item.total.toFixed(2)} INR</p>
+            <p className="text-sm  font-bold text-white">Total</p>
+            <p className="text-lg  font-bold text-white">{item.total.toFixed(2)} INR</p>
           </div>
           <div className="flex flex-col">
             <label htmlFor={`item-description-${index}`}>Description:</label>
@@ -100,13 +100,13 @@ const ItemsLine = () => {
               rows="4"
               cols="50"
               placeholder="Item Description"
-              className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-80 placeholder:font-montserrat"
+              className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-80 "
             ></textarea>
           </div>
         </div>
       ))}
       <button
-        className="flex flex-row items-center justify-center py-2 text-sm font-bold font-raleway mt-4 rounded-lg bg-white text-black w-[50%]"
+        className="flex flex-row items-center justify-center py-2 text-sm font-bold font-lexend mt-4 rounded-lg bg-white text-black w-[50%]"
         onClick={addItem}
       >
         <FaPlus className="mx-2 text-sm" />

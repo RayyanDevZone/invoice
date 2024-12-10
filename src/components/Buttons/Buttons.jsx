@@ -37,7 +37,7 @@ const Buttons = () => {
         <button
           key={button.id}
           onClick={() => navigate(`/${button.route}`)}
-          className={`px-4 py-2 border border-[#1E293B] font-semibold rounded-md font-poppins ${
+          className={`px-4 py-2 border border-[#1E293B] font-semibold rounded-md font-lexend ${
             window.location.pathname === '/' + button.route 
               ? 'bg-white text-[#020817]'
               : 'bg-[#020817] text-white hover:bg-zinc-500'

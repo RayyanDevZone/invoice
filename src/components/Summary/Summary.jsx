@@ -20,9 +20,9 @@ const Summary = () => {
     }
   };
   return (
-    <div className="min-h-screen h-auto w-full rounded-t-xl box-border py-5 px-4  text-white flex flex-col bg-[#020817]  items-left">
+    <div className="min-h-screen h-auto w-full rounded-t-xl box-border py-5 px-4  text-white flex flex-col bg-[#020817]  items-left font-lexend">
       <div>
-        <p className="text-white font-medium font-poppins  mt-8">Signature:</p>
+        <p className="text-white font-medium mt-8">Signature:</p>
         <div className="relative flex items-left justify-left mb-5">
           <input
             id="signature-upload"
@@ -40,7 +40,7 @@ const Summary = () => {
           </label>
         </div>
       </div>
-      <div className="toggles">
+      <div className="toggles my-4">
         {" "}
         <label>
           {" "}
@@ -82,7 +82,7 @@ const Summary = () => {
             rows="4"
             cols="50"
             placeholder="Your additional notes here"
-            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-80  placeholder:font-montserrat"
+            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-80  "
           ></textarea>
         </div>
         <div className="flex flex-col mt-4">
@@ -91,7 +91,7 @@ const Summary = () => {
             rows="4"
             cols="50"
             placeholder="Ex: Credit time period"
-            className="bg-[#020817] border border-[#1E293B]  rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-80  placeholder:font-raleway"
+            className="bg-[#020817] border border-[#1E293B]  rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-80  "
           ></textarea>
         </div>
       </div>
