@@ -13,8 +13,8 @@ const Invoice = () => {
   return (
     <div className="h-[1200px] w-[800px] bg-slate-100 rounded-md text-black box-content py-4 px-3 font-lexend">
       <div className="logoAndAddress w-full h-[250px] flex flex-row items-center justify-between">
-        <div className="logo h-[150px] w-[50%] flex justify-center items-start px-6 flex-col">
-          {invoiceData.logo && <img src={invoiceData.logo} alt="Logo" />}
+        <div className="logo h-[200px] w-[50%] flex justify-center items-start px-6 flex-col">
+          {invoiceData.logo && <img className="h-full w-full object-cover bg-center overflow-hidden" src={invoiceData.logo} alt="Logo" />}
           <h1 className="text-xl font-bold text-blue-600">{invoiceData.sender.name || "Company Name"}</h1>
         </div>
         <div className="address w-[50%] h-[100%] flex items-end justify-evenly flex-col px-6">
