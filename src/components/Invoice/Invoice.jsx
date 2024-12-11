@@ -96,9 +96,11 @@ const Invoice = () => {
       </div>
       <div className="accountDetails h-36 w-full px-6 mt-6">
         <p className="font-bold text-gray-800">Please send the payment to these details:</p>
-        <p className="font-semibold text-sm text-gray-800">Bank: {invoiceData.paymentInfo?.bankName}</p>
+        <p className="font-semibold text-sm text-gray-800">Bank Name: {invoiceData.paymentInfo?.bankName}</p>
         <p className="font-semibold text-sm text-gray-800">Account Name: {invoiceData.paymentInfo?.accountName}</p>
         <p className="font-semibold text-sm text-gray-800">Account Number: {invoiceData.paymentInfo?.accountNumber}</p>
+        <p className="font-semibold text-sm text-gray-800">Account Number: {invoiceData.paymentInfo?.ifscCode}</p>
+        <p className="font-semibold text-sm text-gray-800">Account Number: {invoiceData.paymentInfo?.bankAddress}</p>
       </div>
       <div className="contactDetails h-auto w-full px-6">
         <p className="text-gray-600">If you have any questions concerning this invoice, use the following contact information:</p>
