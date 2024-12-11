@@ -35,7 +35,7 @@ const PaymentInfo = () => {
           />
         </div>
         <div className="flex flex-col items-left gap-2 mt-3">
-          <label htmlFor="account-name" className="text-sm font-bold text-white w-28">Account Name:</label>
+          <label htmlFor="account-name" className="text-sm font-bold text-white w-48">Account Holder Name:</label>
           <input
             type="text"
             id="account-name"
