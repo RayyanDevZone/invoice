@@ -11,10 +11,10 @@ const Invoice = () => {
   };
 
   return (
-    <div className="h-[1200px] w-[800px] bg-slate-100 rounded-md text-black box-content py-4 px-3 font-lexend">
+    <div className="relative h-[1200px] w-[800px] bg-slate-100 rounded-md text-black box-content py-4 px-3 font-lexend">
       <div className="logoAndAddress w-full h-[250px] flex flex-row items-center justify-between">
-        <div className="logo h-[200px] w-[50%] flex justify-center items-start px-6 flex-col">
-          {invoiceData.logo && <img className="h-full w-full object-cover bg-center overflow-hidden" src={invoiceData.logo} alt="Logo" />}
+        <div className="logo h-[150px] w-[50%] flex justify-center items-start px-6 flex-col">
+          {invoiceData.logo && <img src={invoiceData.logo} alt="Logo" />}
           <h1 className="text-xl font-bold text-blue-600">{invoiceData.sender.name || "Company Name"}</h1>
         </div>
         <div className="address w-[50%] h-[100%] flex items-end justify-evenly flex-col px-6">
@@ -99,6 +99,9 @@ const Invoice = () => {
         <p className="text-gray-600">If you have any questions concerning this invoice, use the following contact information:</p>
         <p className="text-gray-600">Phone: {invoiceData.sender.phone}</p>
         <p className="text-gray-600">Email: {invoiceData.sender.email}</p>
+      </div>
+      <div className="contactDetails h-auto w-full px-6 mt-6 flex justify-end items-end self-end absolute bottom-0 mb-4">
+        <p className="text-blue-600">Made using: BillEase</p>
       </div>
     </div>
   );
