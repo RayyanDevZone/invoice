@@ -8,7 +8,7 @@ import PaymentInfo from "./components/PaymentInfo/PaymentInfo";
 import Summary from "./components/Summary/Summary";
 import Buttons from "./components/Buttons/Buttons";
 import Navbar from "./components/Navbar/Navbar";
-import Invoice from "./components/Invoice/Invoice";
+import InvoiceContainer from "./components/InvoiceContainer/InvoiceContainer";
 import SelfLogo from './components/SelfLogo/SelfLogo';
 
 const Routing = () => {
@@ -23,7 +23,7 @@ const Routing = () => {
         <Route path="/itemsLine" element={<ItemsLine />} />
         <Route path="/paymentInfo" element={<PaymentInfo />} />
         <Route path="/summary" element={<Summary />} />
-        <Route path="/invoice" element={<Invoice />} />
+        <Route path="/invoice" element={<InvoiceContainer />} />
 
       </Routes>
       <SelfLogo/>
