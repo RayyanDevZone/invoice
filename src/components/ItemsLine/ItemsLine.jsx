@@ -1,34 +1,38 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
 import { RxCross2 } from "react-icons/rx";
+import { InvoiceContext } from "../../InvoiceContext"; // Import the context
 
 const ItemsLine = () => {
   const navigate = useNavigate();
-  const [items, setItems] = useState([{ itemName: '', quantity: 0, rate: 0, total: 0 }]);
+  const { invoiceData, setInvoiceData } = useContext(InvoiceContext);
 
   const handleInputChange = (index, field, value) => {
-    const newItems = [...items];
+    const newItems = [...invoiceData.items];
     newItems[index][field] = value;
     if (field === 'quantity' || field === 'rate') {
       newItems[index].total = newItems[index].quantity * newItems[index].rate;
     }
-    setItems(newItems);
+    setInvoiceData({ ...invoiceData, items: newItems });
   };
 
   const addItem = () => {
-    setItems([...items, { itemName: '', quantity: 0, rate: 0, total: 0 }]);
+    setInvoiceData({
+      ...invoiceData,
+      items: [...invoiceData.items, { itemName: '', quantity: 0, rate: 0, total: 0 }]
+    });
   };
 
   const removeItem = (index) => {
-    const newItems = items.filter((_, i) => i !== index);
-    setItems(newItems);
+    const newItems = invoiceData.items.filter((_, i) => i !== index);
+    setInvoiceData({ ...invoiceData, items: newItems });
   };
 
   return (
     <div className="min-h-screen h-auto w-full rounded-t-xl box-border py-5 px-4 text-white flex flex-col bg-[#020817] items-left font-lexend">
-      {items.map((item, index) => (
+      {invoiceData.items.map((item, index) => (
         <div key={index} className="w-[85%] h-[70%] bg-slate-800 border border-slate-500 justify-between flex flex-col rounded-lg px-8 py-4 mb-4">
           <p className="text-md  font-bold text-white flex flex-row w-full justify-between">
             {item.itemName || `#${index + 1}-NAME`}
@@ -38,12 +42,7 @@ const ItemsLine = () => {
           </p>
           <div className="flex flex-row w-[70%] items-center justify-between">
             <div className="flex flex-col items-left gap-2 mt-3">
-              <label
-                htmlFor={`item-name-${index}`}
-                className="text-sm  font-bold text-white w-20"
-              >
-                Name :
-              </label>
+              <label htmlFor={`item-name-${index}`} className="text-sm  font-bold text-white w-20">Name :</label>
               <input
                 type="text"
                 id={`item-name-${index}`}
@@ -51,16 +50,11 @@ const ItemsLine = () => {
                 required
                 value={item.itemName}
                 onChange={(e) => handleInputChange(index, 'itemName', e.target.value)}
-                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40 "
+                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40"
               />
             </div>
             <div className="flex flex-col items-left gap-2 mt-3">
-              <label
-                htmlFor={`item-quantity-${index}`}
-                className="text-sm  font-bold text-white w-20"
-              >
-                Quantity:
-              </label>
+              <label htmlFor={`item-quantity-${index}`} className="text-sm  font-bold text-white w-20">Quantity:</label>
               <input
                 type="number"
                 id={`item-quantity-${index}`}
@@ -68,16 +62,11 @@ const ItemsLine = () => {
                 required
                 value={item.quantity}
                 onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
-                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40 "
+                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40"
               />
             </div>
             <div className="flex flex-col items-left gap-2 mt-3">
-              <label
-                htmlFor={`item-rate-${index}`}
-                className="text-sm  font-bold text-white w-20"
-              >
-                Rate :
-              </label>
+              <label htmlFor={`item-rate-${index}`} className="text-sm  font-bold text-white w-20">Rate :</label>
               <input
                 type="number"
                 id={`item-rate-${index}`}
@@ -85,7 +74,7 @@ const ItemsLine = () => {
                 required
                 value={item.rate}
                 onChange={(e) => handleInputChange(index, 'rate', e.target.value)}
-                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40 "
+                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40"
               />
             </div>
           </div>
@@ -100,7 +89,7 @@ const ItemsLine = () => {
               rows="4"
               cols="50"
               placeholder="Item Description"
-              className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-80 "
+              className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-80"
             ></textarea>
           </div>
         </div>
