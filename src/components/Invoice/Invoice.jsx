@@ -10,6 +10,11 @@ const Invoice = () => {
     return date ? format(new Date(date), 'dd MMMM yyyy') : '';
   };
 
+  // Function to calculate subtotal
+  const calculateSubtotal = () => {
+    return invoiceData.items.reduce((total, item) => total + item.total, 0);
+  };
+
   return (
     <div className="relative h-[1200px] w-[800px] bg-slate-100 rounded-md text-black box-content py-4 px-3 font-lexend">
       <div className="logoAndAddress w-full h-[250px] flex flex-row items-center justify-between">
@@ -72,7 +77,7 @@ const Invoice = () => {
       </div>
       <div className="total&subtotal h-[150px] w-full flex flex-col justify-center items-end font-lexend">
         <div className="subtotal border flex items-center justify-center h-[33%] min-w-64 w-auto">
-          <p className="font-bold text-gray-800">Subtotal:</p>
+          <p className="font-bold text-gray-800">Subtotal: {calculateSubtotal().toFixed(2)} INR</p>
         </div>
         <div className="total border flex items-center justify-center h-[33%] min-w-64 w-auto">
           <p className="font-bold text-gray-800">Total:</p>

@@ -21,7 +21,7 @@ const ItemsLine = () => {
   const addItem = () => {
     setInvoiceData({
       ...invoiceData,
-      items: [...invoiceData.items, { itemName: '', quantity: 0, rate: 0, total: 0 }]
+      items: [...invoiceData.items, { itemName: '', quantity: '', rate: '', total: 0 }]
     });
   };
 
