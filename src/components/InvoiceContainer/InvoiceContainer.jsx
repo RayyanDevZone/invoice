@@ -1,12 +1,16 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Invoice from '../Invoice/Invoice';
 import { FiDownload } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa6";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { InvoiceContext } from '../../InvoiceContext'; // Assuming you have this context set up
 
 const InvoiceContainer = () => {
   const componentRef = useRef();
+  const { setInvoiceData } = useContext(InvoiceContext);
+  const navigate = useNavigate();
 
   const handleDownloadPDF = async () => {
     const element = componentRef.current;
@@ -32,13 +36,31 @@ const InvoiceContainer = () => {
     }
   };
 
+  const handleNewInvoice = () => {
+    // Clear the invoice data
+    setInvoiceData({
+      sender: {},
+      receiver: {},
+      items: [],
+      paymentInfo: {},
+      additionalNotes: '',
+      paymentTerms: ''
+    });
+
+    // Navigate to the personal info page
+    navigate('/personal-info');
+  };
+
   return (
     <div className='min-h-screen w-full flex flex-col items-center'>
       <div ref={componentRef}>
         <Invoice />
       </div>
       <div className='h-[200px] w-[500px] bg-[#020817] flex flex-row items-center justify-around rounded-xl mt-5 border-[#1E293B] border font-lexend'>
-        <button className='bg-[#020817] text-white border border-[#1E293B] px-2 py-1 w-[180px] rounded-md flex flex-row items-center justify-evenly'>
+        <button 
+          className='bg-[#020817] text-white border border-[#1E293B] px-2 py-1 w-[180px] rounded-md flex flex-row items-center justify-evenly'
+          onClick={handleNewInvoice}
+        >
           NEW INVOICE <FaPlus />
         </button>
         <button 
