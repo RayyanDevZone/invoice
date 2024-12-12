@@ -61,8 +61,10 @@ const Invoice = () => {
           <thead>
             <tr className="bg-gray-200 border-b border-gray-500">
               <th className="text-gray-700 font-bold p-1 text-center">Items</th>
-              <th className="text-gray-700 font-bold p-1 text-center">Qty</th>
+              <th className="text-gray-700 font-bold p-1 text-center">HSN Code</th>
               <th className="text-gray-700 font-bold p-1 text-center">Rate</th>
+              <th className="text-gray-700 font-bold p-1 text-center">Qty</th>
+              <th className="text-gray-700 font-bold p-1 text-center">Discount</th>
               <th className="text-gray-700 font-bold p-1 text-center">Amount</th>
             </tr>
           </thead>
@@ -70,8 +72,10 @@ const Invoice = () => {
             {invoiceData.items.map((item, index) => (
               <tr key={index} className="border-b border-gray-500">
                 <td className="p-1 text-center">{item.itemName}</td>
-                <td className="p-1 text-center">{item.quantity}</td>
+                <td className="p-1 text-center">{item.hsn}</td>
                 <td className="p-1 text-center">{item.rate} INR</td>
+                <td className="p-1 text-center">{item.quantity}</td>
+                <td className="p-1 text-center">{item.discount || 0}%</td>
                 <td className="p-1 text-center">{item.total.toFixed(2)} INR</td>
               </tr>
             ))}
