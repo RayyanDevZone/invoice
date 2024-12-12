@@ -18,7 +18,7 @@ const Invoice = () => {
   return (
     <div className="relative h-[1200px] w-[800px] bg-slate-100 rounded-md text-black box-content py-4 px-3 font-lexend">
       <div className="logoAndAddress w-full h-[250px] flex flex-row items-center justify-between">
-        <div className="logo h-[150px] w-[50%] flex justify-center items-start px-6 flex-col">
+        <div className="logo h-[150px] w-[50%] flex overflow-hidden object-cover bg-center justify-center items-start px-6 flex-col">
           {invoiceData.logo && <img src={invoiceData.logo} alt="Logo" />}
           <h1 className="text-xl font-bold text-blue-600">{invoiceData.sender.name || "Company Name"}</h1>
         </div>
