@@ -21,7 +21,7 @@ const ItemsLine = () => {
   const addItem = () => {
     setInvoiceData({
       ...invoiceData,
-      items: [...invoiceData.items, { itemName: '', quantity: '', rate: '', total: 0 }]
+      items: [...invoiceData.items, { itemName: '', quantity: '', rate: '', hsn: '', total: 0 }]
     });
   };
 
@@ -34,15 +34,15 @@ const ItemsLine = () => {
     <div className="min-h-screen h-auto w-full rounded-t-xl box-border py-5 px-4 text-white flex flex-col bg-[#020817] items-left font-lexend">
       {invoiceData.items.map((item, index) => (
         <div key={index} className="w-[85%] h-[70%] bg-slate-800 border border-slate-500 justify-between flex flex-col rounded-lg px-8 py-4 mb-4">
-          <p className="text-md  font-bold text-white flex flex-row w-full justify-between">
+          <p className="text-md font-bold text-white flex flex-row w-full justify-between">
             {item.itemName || `#${index + 1}-NAME`}
             <div className="text-xl cursor-pointer" onClick={() => removeItem(index)}>
               <RxCross2 />
             </div>
           </p>
-          <div className="flex flex-row w-[70%] items-center justify-between">
+          <div className="flex flex-row w-full items-center justify-between">
             <div className="flex flex-col items-left gap-2 mt-3">
-              <label htmlFor={`item-name-${index}`} className="text-sm  font-bold text-white w-20">Name :</label>
+              <label htmlFor={`item-name-${index}`} className="text-sm font-bold text-white w-20">Name :</label>
               <input
                 type="text"
                 id={`item-name-${index}`}
@@ -54,7 +54,7 @@ const ItemsLine = () => {
               />
             </div>
             <div className="flex flex-col items-left gap-2 mt-3">
-              <label htmlFor={`item-quantity-${index}`} className="text-sm  font-bold text-white w-20">Quantity:</label>
+              <label htmlFor={`item-quantity-${index}`} className="text-sm font-bold text-white w-20">Quantity:</label>
               <input
                 type="number"
                 id={`item-quantity-${index}`}
@@ -66,7 +66,7 @@ const ItemsLine = () => {
               />
             </div>
             <div className="flex flex-col items-left gap-2 mt-3">
-              <label htmlFor={`item-rate-${index}`} className="text-sm  font-bold text-white w-20">Rate :</label>
+              <label htmlFor={`item-rate-${index}`} className="text-sm font-bold text-white w-20">Rate :</label>
               <input
                 type="number"
                 id={`item-rate-${index}`}
@@ -77,10 +77,22 @@ const ItemsLine = () => {
                 className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40"
               />
             </div>
+            <div className="flex flex-col items-left gap-2 mt-3">
+              <label htmlFor={`item-hsn-${index}`} className="text-sm font-bold text-white w-20">HSN Code :</label>
+              <input
+                type="number"
+                id={`item-hsn-${index}`}
+                placeholder="0"
+                required
+                value={item.hsn}
+                onChange={(e) => handleInputChange(index, 'hsn', e.target.value)}
+                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40"
+              />
+            </div>
           </div>
           <div className="flex flex-col mt-4">
-            <p className="text-sm  font-bold text-white">Total</p>
-            <p className="text-lg  font-bold text-white">{item.total.toFixed(2)} INR</p>
+            <p className="text-sm font-bold text-white">Total</p>
+            <p className="text-lg font-bold text-white">{item.total.toFixed(2)} INR</p>
           </div>
           <div className="flex flex-col">
             <label htmlFor={`item-description-${index}`}>Description:</label>
