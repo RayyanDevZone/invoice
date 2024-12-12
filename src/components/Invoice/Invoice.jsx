@@ -1,13 +1,18 @@
 import React, { useContext } from "react";
 import { InvoiceContext } from "../../InvoiceContext"; // Import the context
-import { format } from 'date-fns'; // Import the format function from date-fns
 
 const Invoice = () => {
   const { invoiceData } = useContext(InvoiceContext);
 
   // Function to format date
   const formatDate = (date) => {
-    return date ? format(new Date(date), 'dd MMMM yyyy') : '';
+    if (!date) return '';
+    const parsedDate = new Date(date);
+    return parsedDate.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    });
   };
 
   // Function to calculate subtotal
@@ -44,11 +49,11 @@ const Invoice = () => {
         </div>
         <div className="invoiceDate w-[50%] h-full flex flex-col justify-start items-end">
           <div className="flex flex-row w-auto mt-6">
-            <h1 className="text-l font-bold text-gray-800 font-poppins">Invoice Date:</h1>
+            <h1 className="text-l font-bold text-gray-800 ">Invoice Date:</h1>
             <p className="text-gray-500 font-semibold px-3">{formatDate(invoiceData.issueDate)}</p>
           </div>
           <div className="flex flex-row w-auto">
-            <h1 className="text-l font-bold text-gray-800 font-poppins">Due Date:</h1>
+            <h1 className="text-l font-bold text-gray-800 ">Due Date:</h1>
             <p className="text-gray-500 font-semibold px-3">{formatDate(invoiceData.dueDate)}</p>
           </div>
         </div>
@@ -99,8 +104,8 @@ const Invoice = () => {
         <p className="font-semibold text-sm text-gray-800">Bank Name: {invoiceData.paymentInfo?.bankName}</p>
         <p className="font-semibold text-sm text-gray-800">Account Name: {invoiceData.paymentInfo?.accountName}</p>
         <p className="font-semibold text-sm text-gray-800">Account Number: {invoiceData.paymentInfo?.accountNumber}</p>
-        <p className="font-semibold text-sm text-gray-800">Account Number: {invoiceData.paymentInfo?.ifscCode}</p>
-        <p className="font-semibold text-sm text-gray-800">Account Number: {invoiceData.paymentInfo?.bankAddress}</p>
+        <p className="font-semibold text-sm text-gray-800">IFSC Code: {invoiceData.paymentInfo?.ifscCode}</p>
+        <p className="font-semibold text-sm text-gray-800">Bank Address: {invoiceData.paymentInfo?.bankAddress}</p>
       </div>
       <div className="contactDetails h-auto w-full px-6">
         <p className="text-gray-600">If you have any questions concerning this invoice, use the following contact information:</p>
