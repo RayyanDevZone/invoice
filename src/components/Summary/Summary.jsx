@@ -21,6 +21,18 @@ const Summary = () => {
     setInvoiceData({ ...invoiceData, paymentTerms: e.target.value });
   };
 
+  const handleDiscountChange = (value) => {
+    setInvoiceData({ ...invoiceData, discount: value });
+  };
+
+  const handleTaxChange = (value) => {
+    setInvoiceData({ ...invoiceData, tax: value });
+  };
+
+  const handleShippingChange = (value) => {
+    setInvoiceData({ ...invoiceData, shipping: value });
+  };
+
   return (
     <div className="min-h-screen h-auto w-full rounded-t-xl box-border py-5 px-4 text-white flex flex-col bg-[#020817] items-left font-lexend">
       <div className="toggles my-4">
@@ -49,11 +61,7 @@ const Summary = () => {
           Shipping
         </label>
       </div>
-      <div className="fields">
-        {isDiscountEnabled && <DiscountField />}
-        {isTaxEnabled && <TaxField />}
-        {isShippingEnabled && <ShippingField />}
-      </div>
+      <div className="fields"> {isDiscountEnabled && <DiscountField value={invoiceData.discount} onChange={handleDiscountChange} />} {isTaxEnabled && <TaxField value={invoiceData.tax} onChange={handleTaxChange} />} {isShippingEnabled && <ShippingField value={invoiceData.shipping} onChange={handleShippingChange} />} </div>
       <div>
         <div className="flex flex-col">
           <label>Additional notes:</label>
