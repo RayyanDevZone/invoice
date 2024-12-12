@@ -26,6 +26,8 @@ const Invoice = () => {
     let total = discountedTotal + taxAmount + (invoiceData.shipping || 0);
     return total.toFixed(2);
   };
+  
+  
 
   return (
     <div className="relative h-[1200px] w-[800px] bg-slate-100 rounded-md text-black box-content py-4 px-3 font-lexend">

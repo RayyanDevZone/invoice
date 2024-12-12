@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState } from 'react'; // Ensure useState is imported
 
 // Create the context
 export const InvoiceContext = createContext();
@@ -25,7 +25,10 @@ export const InvoiceProvider = ({ children }) => {
     paymentTerms: '',
     invoiceNumber: '',
     issueDate: '',
-    dueDate: ''
+    dueDate: '',
+    discount: 0, // Ensure initial values are set
+    tax: 0,
+    shipping: 0
   });
 
   return (

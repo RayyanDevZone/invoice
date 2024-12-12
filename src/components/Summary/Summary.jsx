@@ -25,9 +25,7 @@ const Summary = () => {
     setInvoiceData({ ...invoiceData, discount: value });
   };
 
-  const handleTaxChange = (value) => {
-    setInvoiceData({ ...invoiceData, tax: value });
-  };
+  const handleTaxChange = (value) => { setInvoiceData({ ...invoiceData, tax: value }); console.log("Updated invoiceData with tax:", invoiceData); };
 
   const handleShippingChange = (value) => {
     setInvoiceData({ ...invoiceData, shipping: value });
