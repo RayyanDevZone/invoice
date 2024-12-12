@@ -4,7 +4,6 @@ import { InvoiceContext } from "../../InvoiceContext"; // Import the context
 const Invoice = () => {
   const { invoiceData } = useContext(InvoiceContext);
 
-  // Function to format date
   const formatDate = (date) => {
     if (!date) return '';
     const parsedDate = new Date(date);
@@ -15,7 +14,6 @@ const Invoice = () => {
     });
   };
 
-  // Function to calculate subtotal
   const calculateSubtotal = () => {
     return invoiceData.items.reduce((total, item) => total + item.total, 0);
   };
@@ -49,11 +47,11 @@ const Invoice = () => {
         </div>
         <div className="invoiceDate w-[50%] h-full flex flex-col justify-start items-end">
           <div className="flex flex-row w-auto mt-6">
-            <h1 className="text-l font-bold text-gray-800 ">Invoice Date:</h1>
+            <h1 className="text-l font-bold text-gray-800 font-poppins">Invoice Date:</h1>
             <p className="text-gray-500 font-semibold px-3">{formatDate(invoiceData.issueDate)}</p>
           </div>
           <div className="flex flex-row w-auto">
-            <h1 className="text-l font-bold text-gray-800 ">Due Date:</h1>
+            <h1 className="text-l font-bold text-gray-800 font-poppins">Due Date:</h1>
             <p className="text-gray-500 font-semibold px-3">{formatDate(invoiceData.dueDate)}</p>
           </div>
         </div>

@@ -2,14 +2,35 @@ import React, { useRef } from 'react';
 import Invoice from '../Invoice/Invoice';
 import { FiDownload } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa6";
-import { useReactToPrint } from 'react-to-print';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const InvoiceContainer = () => {
   const componentRef = useRef();
 
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
+  const handleDownloadPDF = async () => {
+    const element = componentRef.current;
+
+    try {
+      // Generate canvas
+      const canvas = await html2canvas(element, { scale: 2 });
+      const imgData = canvas.toDataURL('image/png');
+
+      // Initialize jsPDF
+      const pdf = new jsPDF('p', 'mm', 'a4');
+
+      // Calculate dimensions to fit A4
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+      // Save the PDF
+      pdf.save('invoice.pdf');
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  };
 
   return (
     <div className='min-h-screen w-full flex flex-col items-center'>
@@ -22,9 +43,9 @@ const InvoiceContainer = () => {
         </button>
         <button 
           className='bg-white text-[#020817] px-2 py-1 w-[180px] rounded-md flex flex-row items-center justify-evenly'
-          onClick={handlePrint}
+          onClick={handleDownloadPDF}
         >
-          DOWNLOAD <FiDownload className=' text-md font-bold' />
+          DOWNLOAD <FiDownload className='text-md font-bold' />
         </button>
       </div>
     </div>
