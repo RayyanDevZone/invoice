@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import { InvoiceContext } from "../../InvoiceContext"; // Import the context
+import { InvoiceContext } from "../../InvoiceContext";
+import num2words from 'num2words'; // Import the library
 
 const Invoice = () => {
   const { invoiceData } = useContext(InvoiceContext);
@@ -26,8 +27,13 @@ const Invoice = () => {
     let total = discountedTotal + taxAmount + (invoiceData.shipping || 0);
     return total.toFixed(2);
   };
-  
-  
+
+  const totalInWords = (num) => {
+    const parts = num.split(".");
+    const integerPart = num2words(parts[0], { lang: 'en' });
+    const decimalPart = parts[1] ? num2words(parts[1], { lang: 'en' }) : '';
+    return decimalPart ? `${integerPart} point ${decimalPart}` : integerPart;
+  };
 
   return (
     <div className="relative h-[1200px] w-[800px] bg-slate-100 rounded-md text-black box-content py-4 px-3 font-lexend">
@@ -79,13 +85,18 @@ const Invoice = () => {
               <th className="text-gray-700 font-bold p-1 text-center">Amount</th>
             </tr>
           </thead>
-          <tbody> {invoiceData.items.map((item, index) => (<tr key={index} className="border-b border-gray-500">
-             <td className="p-1 text-center">{item.itemName}</td> 
-             <td className="p-1 text-center">{item.hsn}</td> 
-             <td className="p-1 text-center">{item.rate} INR</td>
-              <td className="p-1 text-center">{item.quantity}</td>
-              <td className="p-1 text-center">{invoiceData.discount || 0}%</td> 
-              <td className="p-1 text-center">{item.total.toFixed(2)} INR</td> </tr>))} </tbody>
+          <tbody>
+            {invoiceData.items.map((item, index) => (
+              <tr key={index} className="border-b border-gray-500">
+                <td className="p-1 text-center">{item.itemName}</td>
+                <td className="p-1 text-center">{item.hsn}</td>
+                <td className="p-1 text-center">{item.rate} INR</td>
+                <td className="p-1 text-center">{item.quantity}</td>
+                <td className="p-1 text-center">{invoiceData.discount || 0}%</td>
+                <td className="p-1 text-center">{item.total.toFixed(2)} INR</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
       <div className="total&subtotal h-[150px] w-full flex flex-col justify-center items-end font-lexend">
@@ -96,7 +107,7 @@ const Invoice = () => {
           <p className="font-bold text-gray-800">Total: {calculateTotal()} INR</p>
         </div>
         <div className="totalInWords flex items-center justify-center h-[33%] min-w-64 w-auto">
-          <p className="font-bold text-gray-800">Total in words:</p>
+          <p className="font-bold text-gray-800">Total in words: {totalInWords(calculateTotal())} RUPEES</p>
         </div>
       </div>
       <div className="additionalNotes w-full mt-3 px-6">
