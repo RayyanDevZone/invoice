@@ -14,7 +14,6 @@ const Invoice = () => {
       year: 'numeric',
     });
   };
-  
 
   const calculateSubtotal = () => {
     return invoiceData.items.reduce((total, item) => total + item.total, 0);
@@ -91,10 +90,10 @@ const Invoice = () => {
               <tr key={index} className="border-b border-gray-500">
                 <td className="p-1 text-center">{item.itemName}</td>
                 <td className="p-1 text-center">{item.hsn}</td>
-                <td className="p-1 text-center">{item.rate} INR</td>
+                <td className="p-1 text-center">{item.rate} {invoiceData.currency}</td>
                 <td className="p-1 text-center">{item.quantity}</td>
                 <td className="p-1 text-center">{invoiceData.discount || 0}%</td>
-                <td className="p-1 text-center">{item.total.toFixed(2)} INR</td>
+                <td className="p-1 text-center">{item.total.toFixed(2)} {invoiceData.currency}</td>
               </tr>
             ))}
           </tbody>
@@ -102,13 +101,13 @@ const Invoice = () => {
       </div>
       <div className="total&subtotal h-[150px] w-full flex flex-col justify-center items-end font-lexend">
         <div className="subtotal border flex items-center justify-center h-[33%] min-w-64 w-auto">
-          <p className="font-bold text-gray-800">Subtotal: {calculateSubtotal().toFixed(2)} INR</p>
+          <p className="font-bold text-gray-800">Subtotal: {calculateSubtotal().toFixed(2)} {invoiceData.currency}</p>
         </div>
         <div className="total border flex items-center justify-center h-[33%] min-w-64 w-auto">
-          <p className="font-bold text-gray-800">Total: {calculateTotal()} INR</p>
+          <p className="font-bold text-gray-800">Total: {calculateTotal()} {invoiceData.currency}</p>
         </div>
         <div className="totalInWords flex items-center justify-center h-[33%] min-w-64 w-auto">
-          <p className="font-bold text-gray-800">Total in words: {totalInWords(calculateTotal())} RUPEES</p>
+          <p className="font-bold text-gray-800">Total in words: {totalInWords(calculateTotal())} {invoiceData.currency.toUpperCase()}</p>
         </div>
       </div>
       <div className="additionalNotes w-full mt-3 px-6">

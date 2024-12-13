@@ -21,7 +21,11 @@ const InvoiceDetails = () => {
     setInvoiceData({ ...invoiceData, [name]: formattedDate });
     name === "issueDate" ? setIssueDate(date) : setDueDate(date); 
   };
-  
+
+  const handleCurrencyChange = (e) => {
+    setInvoiceData({ ...invoiceData, currency: e.target.value });
+  };
+
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -34,7 +38,7 @@ const InvoiceDetails = () => {
   };
 
   return (
-    <div className="h-screen w-full rounded-t-xl box-border py-5 px-4 text-white flex flex-col bg-[#020817] items-left font-lexend ">
+    <div className="min-h-screen h-auto w-full rounded-t-xl box-border py-5 px-4 text-white flex flex-col bg-[#020817] items-left font-lexend ">
       <h1 className="font-semibold text-white text-2xl">Invoice Details:</h1>
       <p className="text-white font-medium mt-8">Invoice Logo:</p>
       <div className="relative flex items-left justify-left">
@@ -85,6 +89,20 @@ const InvoiceDetails = () => {
           className="bg-[#020817] border border-gray-600 rounded p-2 text-white text-sm font-semibold focus:outline-none cursor-pointer focus:border-blue-500 w-60"
           placeholderText="Pick due date"
         />
+      </div>
+      <div className="flex items-center gap-4 mt-8">
+        <label htmlFor="currency" className="text-sm font-bold text-white w-28">Select Currency:</label>
+        <select
+          id="currency"
+          name="currency"
+          value={invoiceData.currency}
+          onChange={handleCurrencyChange}
+          className="bg-[#020817] border border-gray-600 rounded p-2 text-white text-sm font-semibold focus:outline-none cursor-pointer focus:border-blue-500 w-60"
+        >
+          <option value="INR">INR</option>
+          <option value="USD">USD</option>
+          <option value="AED">AED</option>
+        </select>
       </div>
       <div className="flex flex-row w-auto justify-end">
         <button
