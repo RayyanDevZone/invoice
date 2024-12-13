@@ -100,7 +100,7 @@ const Summary = () => {
           onClick={() => navigate("/invoice")}
           className="bg-white hover:bg-zinc-200 mt-12 w-36 mx-4 flex justify-around items-center text-[#020817] font-bold py-2 px-4 rounded"
         >
-          Next <GrFormNextLink className="text-2xl" />
+          Generate <GrFormNextLink className="text-2xl" />
         </button>
       </div>
     </div>
