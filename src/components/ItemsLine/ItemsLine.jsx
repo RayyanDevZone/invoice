@@ -21,7 +21,7 @@ const ItemsLine = () => {
   const addItem = () => {
     setInvoiceData({
       ...invoiceData,
-      items: [...invoiceData.items, { itemName: '', quantity: '', rate: '', hsn: '', total: 0 }]
+      items: [...invoiceData.items, { itemName: '', quantity: '', rate: '', hsn: '', total: 0, unit: 'Kg' }]
     });
   };
 
@@ -62,8 +62,25 @@ const ItemsLine = () => {
                 required
                 value={item.quantity}
                 onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
-                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40  no-spinners"
+                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40 no-spinners"
               />
+            </div>
+            <div className="flex flex-col items-left gap-2 mt-3">
+              <label htmlFor={`item-unit-${index}`} className="text-sm font-bold text-white w-20">Unit:</label>
+              <select
+                id={`item-unit-${index}`}
+                value={item.unit}
+                onChange={(e) => handleInputChange(index, 'unit', e.target.value)}
+                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40"
+              >
+                <option value="Kg">Kg</option>
+                <option value="Piece/Pieces">Piece/Pieces</option>
+                <option value="Bag">Bag</option>
+                <option value="Box">Box</option>
+                <option value="Quintal">Quintal</option>
+                <option value="Tonne">Tonne</option>
+                <option value="Bundle">Bundle</option>
+              </select>
             </div>
             <div className="flex flex-col items-left gap-2 mt-3">
               <label htmlFor={`item-rate-${index}`} className="text-sm font-bold text-white w-20">Rate :</label>
@@ -74,7 +91,7 @@ const ItemsLine = () => {
                 required
                 value={item.rate}
                 onChange={(e) => handleInputChange(index, 'rate', e.target.value)}
-                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40  no-spinners"
+                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40 no-spinners"
               />
             </div>
             <div className="flex flex-col items-left gap-2 mt-3">
@@ -86,7 +103,7 @@ const ItemsLine = () => {
                 required
                 value={item.hsn}
                 onChange={(e) => handleInputChange(index, 'hsn', e.target.value)}
-                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40  no-spinners"
+                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40 no-spinners"
               />
             </div>
           </div>
