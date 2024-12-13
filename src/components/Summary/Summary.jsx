@@ -40,7 +40,7 @@ const Summary = () => {
             checked={isDiscountEnabled}
             onChange={() => setIsDiscountEnabled(!isDiscountEnabled)}
           />{" "}
-          Discount
+          Discount 
         </label>{" "}
         <label>
           <input
@@ -59,7 +59,10 @@ const Summary = () => {
           Shipping
         </label>
       </div>
-      <div className="fields"> {isDiscountEnabled && <DiscountField value={invoiceData.discount} onChange={handleDiscountChange} />} {isTaxEnabled && <TaxField value={invoiceData.tax} onChange={handleTaxChange} />} {isShippingEnabled && <ShippingField value={invoiceData.shipping} onChange={handleShippingChange} />} </div>
+      <div className="fields">
+         {isDiscountEnabled && <DiscountField value={invoiceData.discount} onChange={handleDiscountChange} />}
+          {isTaxEnabled && <TaxField value={invoiceData.tax} onChange={handleTaxChange} />} 
+          {isShippingEnabled && <ShippingField value={invoiceData.shipping} onChange={handleShippingChange} />} </div>
       <div>
         <div className="flex flex-col">
           <label>Additional notes:</label>

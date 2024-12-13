@@ -4,7 +4,7 @@ import React from "react";
 const DiscountField = ({ value, onChange }) => {
   return (
     <div className="field my-4">
-      <label>Discount:</label>
+      <label>Discount %:</label>
       <input
         type="number"
         name="discount"

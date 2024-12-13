@@ -5,7 +5,7 @@ import "../../custom.css"; // Import the custom CSS
 const TaxField = ({ value, onChange }) => {
   return (
     <div className="field my-4">
-      <label>Tax:</label>
+      <label>Tax %:</label>
       <input
         type="number"
         name="tax"
