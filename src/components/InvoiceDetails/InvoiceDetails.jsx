@@ -17,11 +17,11 @@ const InvoiceDetails = () => {
   };
 
   const handleDateChange = (date, name) => {
-    const formattedDate = date ? date.toISOString().substring(0, 10) : null;
+    const formattedDate = date ? date.toLocaleDateString('en-CA') : null; // Use 'en-CA' to get YYYY-MM-DD format without timezone issues
     setInvoiceData({ ...invoiceData, [name]: formattedDate });
-    name === "issueDate" ? setIssueDate(date) : setDueDate(date);
+    name === "issueDate" ? setIssueDate(date) : setDueDate(date); 
   };
-
+  
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {

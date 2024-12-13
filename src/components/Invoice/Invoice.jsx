@@ -14,6 +14,7 @@ const Invoice = () => {
       year: 'numeric',
     });
   };
+  
 
   const calculateSubtotal = () => {
     return invoiceData.items.reduce((total, item) => total + item.total, 0);
