@@ -107,7 +107,7 @@ const Invoice = () => {
           <p className="font-bold text-gray-800">Total: {calculateTotal()} {invoiceData.currency}</p>
         </div>
         <div className="totalInWords flex items-center justify-center h-[33%] min-w-64 w-auto">
-          <p className="font-bold text-gray-800">Total in words: {totalInWords(calculateTotal())} {invoiceData.currency.toUpperCase()}</p>
+          <p className="font-bold text-gray-800">Total in words: {totalInWords(calculateTotal())} {invoiceData.currency}</p>
         </div>
       </div>
       <div className="additionalNotes w-full mt-3 px-6">
