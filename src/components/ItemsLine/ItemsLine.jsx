@@ -92,7 +92,8 @@ const ItemsLine = () => {
           </div>
           <div className="flex flex-col mt-4">
             <p className="text-sm font-bold text-white">Total</p>
-            <p className="text-lg font-bold text-white">{item.total.toFixed(2)} INR</p>
+            <p className="text-lg my-2 font-bold text-white">{item.total.toFixed(2)} {invoiceData.currency}</p>
+
           </div>
           <div className="flex flex-col">
             <label htmlFor={`item-description-${index}`}>Description:</label>
