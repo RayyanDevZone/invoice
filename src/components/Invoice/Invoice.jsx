@@ -91,7 +91,7 @@ const Invoice = () => {
                 <td className="p-1 text-center">{item.itemName}</td>
                 <td className="p-1 text-center">{item.hsn}</td>
                 <td className="p-1 text-center">{item.rate} {invoiceData.currency}</td>
-                <td className="p-1 text-center">{item.quantity}{item.unit}</td>
+                <td className="p-1 text-center">{item.quantity}  {item.unit}</td>
                 <td className="p-1 text-center">{invoiceData.discount || 0}%</td>
                 <td className="p-1 text-center">{item.total.toFixed(2)} {invoiceData.currency}</td>
               </tr>
