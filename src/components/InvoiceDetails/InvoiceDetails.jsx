@@ -56,7 +56,7 @@ const InvoiceDetails = () => {
       <div className="flex items-center gap-4 mt-8">
         <label htmlFor="invoiceNumber" className="text-sm font-bold text-white w-34">Invoice Number:</label>
         <input
-          type="number"
+          type="text"  // Change input type to "text"
           id="invoiceNumber"
           name="invoiceNumber"
           placeholder="Invoice number"
