@@ -63,7 +63,7 @@ const InvoiceDetails = () => {
           required
           value={invoiceData.invoiceNumber}
           onChange={handleInputChange}
-          className="bg-[#020817] border border-gray-600 rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-60"
+          className="bg-[#020817] border border-gray-600 rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-60  no-spinners"
         />
       </div>
       <div className="flex items-center gap-4 mt-8">

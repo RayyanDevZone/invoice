@@ -11,7 +11,7 @@ const DiscountField = ({ value, onChange }) => {
         placeholder="Enter discount"
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="bg-[#020817] border border-[#1E293B] mx-2 rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-48 placeholder:font-montserrat"
+        className="bg-[#020817] border border-[#1E293B] mx-2 rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-48 placeholder:font-montserrat no-spinners" // Apply the custom class
       />
     </div>
   );

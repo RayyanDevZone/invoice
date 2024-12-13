@@ -57,7 +57,7 @@ const PaymentInfo = () => {
             required
             value={invoiceData.paymentInfo?.accountNumber || ''}
             onChange={handleInputChange}
-            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64"
+            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64  no-spinners"
           />
         </div>
         <div className="flex flex-row w-[450px] justify-between items-center  gap-2 mt-3">

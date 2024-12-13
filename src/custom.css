@@ -1,0 +1,9 @@
+/* custom.css */
+.no-spinners::-webkit-outer-spin-button,
+.no-spinners::-webkit-inner-spin-button {
+  @apply appearance-none m-0; /* Using Tailwind's @apply */
+}
+
+.no-spinners {
+  @apply appearance-none; /* For Firefox */
+}

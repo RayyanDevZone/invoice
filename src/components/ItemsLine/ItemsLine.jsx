@@ -62,7 +62,7 @@ const ItemsLine = () => {
                 required
                 value={item.quantity}
                 onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
-                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40"
+                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40  no-spinners"
               />
             </div>
             <div className="flex flex-col items-left gap-2 mt-3">
@@ -74,7 +74,7 @@ const ItemsLine = () => {
                 required
                 value={item.rate}
                 onChange={(e) => handleInputChange(index, 'rate', e.target.value)}
-                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40"
+                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40  no-spinners"
               />
             </div>
             <div className="flex flex-col items-left gap-2 mt-3">
@@ -86,7 +86,7 @@ const ItemsLine = () => {
                 required
                 value={item.hsn}
                 onChange={(e) => handleInputChange(index, 'hsn', e.target.value)}
-                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40"
+                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40  no-spinners"
               />
             </div>
           </div>
