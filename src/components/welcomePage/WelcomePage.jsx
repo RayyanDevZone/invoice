@@ -10,7 +10,7 @@ const WelcomePage = () => {
       <h2 className="text-3xl">To</h2>
       <h1 className="my-4">Bill Ease</h1>
       <button 
-        onClick={() => navigate('/personal-info')}
+        onClick={() => navigate('/login')}
         className="bg-zinc-100 text-xl text-black rounded-md w-[200px] px-8 py-2 flex justify-between items-center my-4"
       >
         {" "}

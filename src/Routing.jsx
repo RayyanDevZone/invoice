@@ -10,6 +10,7 @@ import Buttons from "./components/Buttons/Buttons";
 import Navbar from "./components/Navbar/Navbar";
 import InvoiceContainer from "./components/InvoiceContainer/InvoiceContainer";
 import SelfLogo from './components/SelfLogo/SelfLogo';
+import Login from './components/Login/Login'
 
 const Routing = () => {
   return (
@@ -24,6 +25,8 @@ const Routing = () => {
         <Route path="/paymentInfo" element={<PaymentInfo />} />
         <Route path="/summary" element={<Summary />} />
         <Route path="/invoice" element={<InvoiceContainer />} />
+        <Route path="/login" element={<Login />} />
+        
 
       </Routes>
       <SelfLogo/>
