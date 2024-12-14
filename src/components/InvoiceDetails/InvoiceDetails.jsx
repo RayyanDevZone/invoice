@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { LuImagePlus } from "react-icons/lu";
+import { FiTrash2 } from "react-icons/fi"; // Import the dustbin icon
 import { useNavigate } from "react-router-dom";
 import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
 import DatePicker from "react-datepicker";
@@ -11,6 +12,7 @@ const InvoiceDetails = () => {
   const { invoiceData, setInvoiceData } = useContext(InvoiceContext);
   const [issueDate, setIssueDate] = useState(null);
   const [dueDate, setDueDate] = useState(null);
+  const [logoUploaded, setLogoUploaded] = useState(false); // Track logo upload state
 
   const handleInputChange = (e) => {
     setInvoiceData({ ...invoiceData, [e.target.name]: e.target.value });
@@ -32,10 +34,19 @@ const InvoiceDetails = () => {
       const reader = new FileReader();
       reader.onload = (e) => {
         setInvoiceData({ ...invoiceData, logo: e.target.result });
+        setLogoUploaded(true); // Set logo uploaded state to true
       };
       reader.readAsDataURL(file);
     }
   };
+
+  const handleImageDelete = () => {
+    setTimeout(() => {
+      setInvoiceData({ ...invoiceData, logo: "" });
+      setLogoUploaded(false); // Set logo uploaded state to false
+    }, 100); // Adding a slight delay of 100ms
+  };
+  
 
   return (
     <div className="min-h-screen h-auto w-full rounded-t-xl box-border py-5 px-4 text-white flex flex-col bg-[#020817] items-left font-lexend ">
@@ -56,18 +67,23 @@ const InvoiceDetails = () => {
           <LuImagePlus className="text-2xl" />
           Click to upload image
         </label>
+        {logoUploaded && (
+          <div className="absolute right-[85%] top-[15%] mt-2 mr-2 cursor-pointer" onClick={handleImageDelete}>
+            <FiTrash2 className="text-2xl text-red-600" />
+          </div>
+        )}
       </div>
       <div className="flex items-center gap-4 mt-8">
         <label htmlFor="invoiceNumber" className="text-sm font-bold text-white w-34">Invoice Number:</label>
         <input
-          type="text"  // Change input type to "text"
+          type="text"
           id="invoiceNumber"
           name="invoiceNumber"
           placeholder="Invoice number"
           required
           value={invoiceData.invoiceNumber}
           onChange={handleInputChange}
-          className="bg-[#020817] border border-gray-600 rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-60  no-spinners"
+          className="bg-[#020817] border border-gray-600 rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-60 no-spinners"
         />
       </div>
       <div className="flex items-center gap-4 mt-8">
