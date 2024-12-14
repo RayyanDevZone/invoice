@@ -38,10 +38,12 @@ const Invoice = () => {
   return (
     <div className="relative h-[1200px] w-[800px] bg-slate-100 rounded-md text-black box-content py-4 px-3 font-lexend">
       <div className="logoAndAddress w-full h-[250px] flex flex-row items-center justify-between">
-        <div className="logo h-[150px] w-[50%] flex overflow-hidden object-cover bg-center justify-center items-start px-6 flex-col">
+       <div className='h-full w-[50%]  flex flex-col items-left justify-around'>
+       <div className="logo h-[150px] flex overflow-hidden object-cover bg-center justify-center items-start px-6 flex-col">
           {invoiceData.logo && <img src={invoiceData.logo} alt="Logo" />}
-          <h1 className="text-xl font-bold text-blue-600">{invoiceData.sender.name || "Company Name"}</h1>
         </div>
+        <h1 className="text-xl z-10  h-auto font-bold px-6 text-blue-600">{invoiceData.sender.name || "Company Name"}</h1>
+       </div>
         <div className="address w-[50%] h-[100%] flex items-end justify-evenly flex-col px-6">
           <div className="invoiceAndNumber flex flex-col items-end justify-center">
             <h1 className="text-3xl font-bold font-poppins text-gray-800">Invoice</h1>
@@ -54,7 +56,7 @@ const Invoice = () => {
           </div>
         </div>
       </div>
-      <div className="RecieverAddressDate w-full h-[200px] flex flex-row items-center justify-between px-6">
+      <div className="RecieverAddressDate w-full h-[200px] flex flex-row  items-center justify-between px-6">
         <div className="BillTo w-[50%] h-full">
           <h1 className="text-2xl font-bold text-gray-800 font-poppins">Bill to:</h1>
           <p className="text-xl font-bold text-gray-800">{invoiceData.receiver.name}</p>
