@@ -9,11 +9,12 @@ import { InvoiceContext } from '../../InvoiceContext'; // Assuming you have this
 
 const InvoiceContainer = () => {
   const componentRef = useRef();
-  const { setInvoiceData } = useContext(InvoiceContext);
+  const { invoiceData, setInvoiceData } = useContext(InvoiceContext); // Ensure you have access to invoiceData
   const navigate = useNavigate();
 
   const handleDownloadPDF = async () => {
     const element = componentRef.current;
+    const invoiceName = invoiceData.invoiceName || 'invoice'; // Use the invoice name or default to 'invoice'
 
     try {
       // Generate canvas
@@ -29,8 +30,8 @@ const InvoiceContainer = () => {
 
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
 
-      // Save the PDF
-      pdf.save('invoice.pdf');
+      // Save the PDF with the given invoice name
+      pdf.save(`${invoiceName}.pdf`);
     } catch (error) {
       console.error('Error generating PDF:', error);
     }
