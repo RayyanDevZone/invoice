@@ -25,10 +25,16 @@ const Summary = () => {
     setInvoiceData({ ...invoiceData, discount: value });
   };
 
-  const handleTaxChange = (value) => { setInvoiceData({ ...invoiceData, tax: value }); console.log("Updated invoiceData with tax:", invoiceData); };
+  const handleTaxChange = (value) => {
+    setInvoiceData({ ...invoiceData, tax: value });
+  };
 
   const handleShippingChange = (value) => {
     setInvoiceData({ ...invoiceData, shipping: value });
+  };
+
+  const handleInvoiceNameChange = (e) => {
+    setInvoiceData({ ...invoiceData, invoiceName: e.target.value });
   };
 
   return (
@@ -62,9 +68,21 @@ const Summary = () => {
       <div className="fields">
          {isDiscountEnabled && <DiscountField value={invoiceData.discount} onChange={handleDiscountChange} />}
           {isTaxEnabled && <TaxField value={invoiceData.tax} onChange={handleTaxChange} />} 
-          {isShippingEnabled && <ShippingField value={invoiceData.shipping} onChange={handleShippingChange} />} </div>
+          {isShippingEnabled && <ShippingField value={invoiceData.shipping} onChange={handleShippingChange} />} 
+      </div>
+      <div className="flex flex-col">
+        <label htmlFor="invoiceName">Invoice Name:</label>
+        <input
+          type="text"
+          id="invoiceName"
+          placeholder="Invoice Name"
+          value={invoiceData.invoiceName || ''}
+          onChange={handleInvoiceNameChange}
+          className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-80"
+        />
+      </div>
       <div>
-        <div className="flex flex-col">
+        <div className="flex flex-col mt-4">
           <label>Additional notes:</label>
           <textarea
             rows="4"
