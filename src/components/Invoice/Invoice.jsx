@@ -62,7 +62,7 @@ const Invoice = () => {
             <h1 className="text-xl text-gray-500 font-semibold">#{invoiceData.invoiceNumber}</h1>
           </div>
           <div className="address flex flex-col items-end text-gray-700 text-[18px] font-semibold font-poppins justify-center">
-            <p>{invoiceData.sender.gstreg}</p>
+            <p>GST REG:{invoiceData.sender.gstReg}</p>
             <p>{invoiceData.sender.address}</p>
             <p>{invoiceData.sender.city}, {invoiceData.sender.zip}</p>
             <p>{invoiceData.sender.country}</p>
@@ -73,7 +73,7 @@ const Invoice = () => {
         <div className="BillTo w-[50%] h-full">
           <h1 className="text-2xl font-bold text-gray-800 font-poppins">Bill to:</h1>
           <p className="text-xl font-bold text-gray-800">{invoiceData.receiver.name}</p>
-          <p className="text-xl font-bold text-gray-800">{invoiceData.receiver.gstreg}</p>
+          <p className="text-xl font-bold text-gray-800">GST REG:{invoiceData.receiver.gstReg}</p>
           <p className="text-gray-600 font-semibold">{invoiceData.receiver.address}</p>
           <p className="text-gray-600 font-semibold">{invoiceData.receiver.city}, {invoiceData.receiver.zip}</p>
           <p className="text-gray-600 font-semibold">{invoiceData.receiver.country}</p>
