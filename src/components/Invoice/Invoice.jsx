@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { InvoiceContext } from "../../InvoiceContext";
-import num2words from 'num2words'; // Import the library
+import num2words from 'num2words';
 
 const Invoice = () => {
   const { invoiceData } = useContext(InvoiceContext);
@@ -12,6 +12,16 @@ const Invoice = () => {
       day: '2-digit',
       month: 'long',
       year: 'numeric',
+    });
+  };
+
+  const formatTime = (date) => {
+    if (!date) return '';
+    const parsedDate = new Date(date);
+    return parsedDate.toLocaleTimeString('en-GB', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second:'2-digit'
     });
   };
 
@@ -35,14 +45,16 @@ const Invoice = () => {
     return decimalPart ? `${integerPart} point ${decimalPart}` : integerPart;
   };
 
+  const invoiceGeneratedTime = new Date();
+
   return (
     <div className="relative h-[1200px] w-[800px] bg-slate-100 rounded-md text-black box-content py-4 px-3 font-lexend">
       <div className="logoAndAddress w-full h-[250px] flex flex-row items-center justify-between">
-        <div className='h-full w-[50%]  flex flex-col items-left justify-around'>
+        <div className='h-full w-[50%] flex flex-col items-left justify-around'>
           <div className="logo h-[150px] flex overflow-hidden object-cover bg-center justify-center items-start px-6 flex-col">
             {invoiceData.logo && <img src={invoiceData.logo} alt="Logo" />}
           </div>
-          <h1 className="text-xl z-10  h-auto font-bold px-6 text-blue-600">{invoiceData.sender.name || "Company Name"}</h1>
+          <h1 className="text-xl z-10 h-auto font-bold px-6 text-blue-600">{invoiceData.sender.name || "Company Name"}</h1>
         </div>
         <div className="address w-[50%] h-[100%] flex items-end justify-evenly flex-col px-6">
           <div className="invoiceAndNumber flex flex-col items-end justify-center">
@@ -50,27 +62,24 @@ const Invoice = () => {
             <h1 className="text-xl text-gray-500 font-semibold">#{invoiceData.invoiceNumber}</h1>
           </div>
           <div className="address flex flex-col items-end text-gray-700 text-[18px] font-semibold font-poppins justify-center">
+            <p>{invoiceData.sender.gstreg}</p>
             <p>{invoiceData.sender.address}</p>
             <p>{invoiceData.sender.city}, {invoiceData.sender.zip}</p>
             <p>{invoiceData.sender.country}</p>
-            <p className="text-gray-600 font-medium">GST Reg: {invoiceData.sender.gstReg}</p>
           </div>
-
         </div>
       </div>
-      <div className="RecieverAddressDate w-full h-[170px]  flex flex-row  items-center justify-between px-6">
+      <div className="RecieverAddressDate w-full h-[200px] flex flex-row items-center justify-between px-6">
         <div className="BillTo w-[50%] h-full">
           <h1 className="text-2xl font-bold text-gray-800 font-poppins">Bill to:</h1>
           <p className="text-xl font-bold text-gray-800">{invoiceData.receiver.name}</p>
-          <p className="text-gray-600 font-medium">GST Reg: {invoiceData.receiver.gstReg}</p>
+          <p className="text-xl font-bold text-gray-800">{invoiceData.receiver.gstreg}</p>
           <p className="text-gray-600 font-semibold">{invoiceData.receiver.address}</p>
           <p className="text-gray-600 font-semibold">{invoiceData.receiver.city}, {invoiceData.receiver.zip}</p>
           <p className="text-gray-600 font-semibold">{invoiceData.receiver.country}</p>
-
         </div>
-
         <div className="invoiceDate w-[50%] h-full flex flex-col justify-start items-end">
-          <div className="flex flex-row w-auto mt-6 " >
+          <div className="flex flex-row w-auto mt-6">
             <h1 className="text-l font-bold text-gray-800 font-poppins">Invoice Date:</h1>
             <p className="text-gray-500 font-semibold px-3">{formatDate(invoiceData.issueDate)}</p>
           </div>
@@ -78,9 +87,13 @@ const Invoice = () => {
             <h1 className="text-l font-bold text-gray-800 font-poppins">Due Date:</h1>
             <p className="text-gray-500 font-semibold px-3">{formatDate(invoiceData.dueDate)}</p>
           </div>
+          <div className="flex flex-row w-auto mt-2">
+            <h1 className="text-l font-bold text-gray-800 font-poppins">Time Generated:</h1>
+            <p className="text-gray-500 font-semibold px-3">{formatTime(invoiceGeneratedTime)}</p>
+          </div>
         </div>
       </div>
-      <div className="itemsTable w-full h-auto min-h-16 flex flex-col border border-gray-400 rounded-md ">
+      <div className="itemsTable w-full h-auto min-h-16 flex flex-col border border-gray-400 rounded-md mt-6">
         <table className="w-full table-auto border-collapse font-poppins text-gray-800 font-semibold font-lexend">
           <thead>
             <tr className="bg-gray-200 border-b border-gray-500">
