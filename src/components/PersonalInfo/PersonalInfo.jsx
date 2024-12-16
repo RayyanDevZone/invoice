@@ -22,9 +22,14 @@ const PersonalInfo = () => {
       <div className="w-[50%] h-full box-border py-4 px-3">
         <h3 className="text-white font-bold text-xl">Bill From:</h3>
         <div className="flex flex-col gap-2">
-          {["name", "address", "zip", "city", "country", "email", "phone","Gst Reg."].map((field) => (
+          {["name", "address", "zip", "city", "country", "email", "phone", "gstReg"].map((field) => (
             <div key={field} className="flex items-center gap-4">
-              <label htmlFor={field} className="text-sm font-bold text-white w-20 capitalize">{field} :</label>
+              <label
+                htmlFor={field}
+                className="text-sm font-bold text-white w-20 capitalize"
+              >
+                {field === "gstReg" ? "GST Reg." : field} :
+              </label>
               <input
                 type={field === "email" ? "email" : field === "phone" ? "tel" : "text"}
                 id={field}
@@ -37,15 +42,21 @@ const PersonalInfo = () => {
               />
             </div>
           ))}
+
         </div>
       </div>
       <div className="w-[50%] h-full">
         <div className="h-full box-border py-4 px-3">
           <h3 className="text-white font-bold text-xl">Bill To:</h3>
           <div className="flex flex-col gap-2">
-            {["name", "address", "zip", "city", "country", "email", "phone","Gst Reg."].map((field) => (
+            {["name", "address", "zip", "city", "country", "email", "phone", "gstReg"].map((field) => (
               <div key={field} className="flex items-center gap-4">
-                <label htmlFor={field} className="text-sm font-bold text-white w-20 capitalize">{field} :</label>
+                <label
+                  htmlFor={field}
+                  className="text-sm font-bold text-white w-20 capitalize"
+                >
+                  {field === "gstReg" ? "GST Reg." : field} :
+                </label>
                 <input
                   type={field === "email" ? "email" : field === "phone" ? "tel" : "text"}
                   id={field}
@@ -58,6 +69,7 @@ const PersonalInfo = () => {
                 />
               </div>
             ))}
+
             <button
               type="button"
               onClick={() => navigate("/invoice-details")}

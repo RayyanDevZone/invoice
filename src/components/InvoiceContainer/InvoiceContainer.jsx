@@ -9,28 +9,22 @@ import { InvoiceContext } from '../../InvoiceContext'; // Assuming you have this
 
 const InvoiceContainer = () => {
   const componentRef = useRef();
-  const { invoiceData, setInvoiceData } = useContext(InvoiceContext); // Ensure you have access to invoiceData
+  const { invoiceData, setInvoiceData } = useContext(InvoiceContext);
   const navigate = useNavigate();
 
   const handleDownloadPDF = async () => {
     const element = componentRef.current;
-    const invoiceName = invoiceData.invoiceName || 'invoice'; // Use the invoice name or default to 'invoice'
+    const invoiceName = invoiceData.invoiceName || 'invoice';
 
     try {
-      // Generate canvas
       const canvas = await html2canvas(element, { scale: 2 });
       const imgData = canvas.toDataURL('image/png');
 
-      // Initialize jsPDF
       const pdf = new jsPDF('p', 'mm', 'a4');
-
-      // Calculate dimensions to fit A4
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-
-      // Save the PDF with the given invoice name
       pdf.save(`${invoiceName}.pdf`);
     } catch (error) {
       console.error('Error generating PDF:', error);
@@ -38,14 +32,13 @@ const InvoiceContainer = () => {
   };
 
   const handleNewInvoice = () => {
-    // Clear the invoice data
+    // Clear only the receiver details and related information
     setInvoiceData({
-      sender: {},
-      receiver: {},
-      items: [],
-      paymentInfo: {},
-      additionalNotes: '',
-      paymentTerms: ''
+      ...invoiceData, // Retain the current invoiceData
+      receiver: {}, // Clear receiver details
+      items: [], // Clear items
+      additionalNotes: '', // Clear additional notes
+      paymentTerms: '' // Clear payment terms
     });
 
     // Navigate to the personal info page

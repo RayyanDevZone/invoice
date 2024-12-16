@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'; // Ensure useState is imported
+import React, { createContext, useState } from 'react';
 
 // Create the context
 export const InvoiceContext = createContext();
@@ -11,14 +11,16 @@ export const InvoiceProvider = ({ children }) => {
       address: '',
       city: '',
       zip: '',
-      country: ''
+      country: '',
+      gstReg: '' // Add GST Registration field
     },
     receiver: {
       name: '',
       address: '',
       city: '',
       zip: '',
-      country: ''
+      country: '',
+      gstReg: '' // Add GST Registration field
     },
     items: [],
     additionalNotes: '',
@@ -26,7 +28,7 @@ export const InvoiceProvider = ({ children }) => {
     invoiceNumber: '',
     issueDate: '',
     dueDate: '',
-    discount: 0, // Ensure initial values are set
+    discount: 0,
     tax: 0,
     shipping: 0
   });
