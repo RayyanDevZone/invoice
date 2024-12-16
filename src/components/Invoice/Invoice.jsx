@@ -4,6 +4,7 @@ import num2words from 'num2words';
 
 const Invoice = () => {
   const { invoiceData } = useContext(InvoiceContext);
+  const qrCode = localStorage.getItem('qrCode') || '';
 
   const formatDate = (date) => {
     if (!date) return '';
@@ -21,7 +22,7 @@ const Invoice = () => {
     return parsedDate.toLocaleTimeString('en-GB', {
       hour: '2-digit',
       minute: '2-digit',
-      second:'2-digit'
+      second: '2-digit'
     });
   };
 
@@ -134,17 +135,24 @@ const Invoice = () => {
         <h2 className="font-bold text-blue-600">Additional Notes:</h2>
         <p className="mt-2">{invoiceData.additionalNotes}</p>
       </div>
-      <div className="paymentTerms w-full mt-3 px-6">
+      <div className="paymentTerms w-full  mt-3 px-6">
         <h2 className="font-bold text-blue-600">Payment Terms:</h2>
         <p className="mt-2">{invoiceData.paymentTerms}</p>
       </div>
-      <div className="accountDetails h-36 w-full px-6 mt-6">
-        <p className="font-bold text-gray-800">Please send the payment to these details:</p>
-        <p className="font-semibold text-sm text-gray-800">Bank Name: {invoiceData.paymentInfo?.bankName}</p>
-        <p className="font-semibold text-sm text-gray-800">Account Name: {invoiceData.paymentInfo?.accountName}</p>
-        <p className="font-semibold text-sm text-gray-800">Account Number: {invoiceData.paymentInfo?.accountNumber}</p>
-        <p className="font-semibold text-sm text-gray-800">IFSC Code: {invoiceData.paymentInfo?.ifscCode}</p>
-        <p className="font-semibold text-sm text-gray-800">Bank Address: {invoiceData.paymentInfo?.bankAddress}</p>
+      <div className="accountDetails flex flex-row items-center  justify-between  h-36 w-full px-6 mt-6">
+        <div className='flex flex-col '><p className="font-bold text-gray-800">Please send the payment to these details:</p>
+          <p className="font-semibold text-sm text-gray-800">Bank Name: {invoiceData.paymentInfo?.bankName}</p>
+          <p className="font-semibold text-sm text-gray-800">Account Name: {invoiceData.paymentInfo?.accountName}</p>
+          <p className="font-semibold text-sm text-gray-800">Account Number: {invoiceData.paymentInfo?.accountNumber}</p>
+          <p className="font-semibold text-sm text-gray-800">IFSC Code: {invoiceData.paymentInfo?.ifscCode}</p>
+          <p className="font-semibold text-sm text-gray-800">Bank Address: {invoiceData.paymentInfo?.bankAddress}</p></div>
+
+        <div className="h-full w-[140px] ">  {qrCode && (
+          <div className="qr-code h-full w-full">
+            <img src={qrCode} alt="QR Code" className="w-full h-full" />
+          </div>
+        )}</div>
+
       </div>
       <div className="contactDetails h-auto w-full px-6">
         <p className="text-gray-600">If you have any questions concerning this invoice, use the following contact information:</p>

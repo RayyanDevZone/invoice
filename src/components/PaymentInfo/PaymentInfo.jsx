@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
 import { InvoiceContext } from "../../InvoiceContext"; // Import the context
@@ -6,6 +6,7 @@ import { InvoiceContext } from "../../InvoiceContext"; // Import the context
 const PaymentInfo = () => {
   const navigate = useNavigate();
   const { invoiceData, setInvoiceData } = useContext(InvoiceContext);
+  const [qrCode, setQrCode] = useState(localStorage.getItem('qrCode') || '');
 
   const handleInputChange = (e) => {
     setInvoiceData({
@@ -15,6 +16,19 @@ const PaymentInfo = () => {
         [e.target.name]: e.target.value
       }
     });
+  };
+
+  const handleQrUpload = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result;
+      setQrCode(base64String);
+      localStorage.setItem('qrCode', base64String);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -34,7 +48,7 @@ const PaymentInfo = () => {
             className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64"
           />
         </div>
-        <div className="flex flex-row w-[450px]  justify-center items-center  gap-2 mt-3">
+        <div className="flex flex-row w-[450px] justify-center items-center gap-2 mt-3">
           <label htmlFor="account-name" className="text-sm font-bold text-white w-48">Account Holder Name:</label>
           <input
             type="text"
@@ -47,7 +61,7 @@ const PaymentInfo = () => {
             className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64"
           />
         </div>
-        <div className="flex flex-row w-[450px] justify-between items-center  gap-2 mt-3">
+        <div className="flex flex-row w-[450px] justify-between items-center gap-2 mt-3">
           <label htmlFor="accountNumber" className="text-sm font-bold text-white w-36">Account Number:</label>
           <input
             type="number"
@@ -57,10 +71,10 @@ const PaymentInfo = () => {
             required
             value={invoiceData.paymentInfo?.accountNumber || ''}
             onChange={handleInputChange}
-            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64  no-spinners"
+            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64 no-spinners"
           />
         </div>
-        <div className="flex flex-row w-[450px] justify-between items-center  gap-2 mt-3">
+        <div className="flex flex-row w-[450px] justify-between items-center gap-2 mt-3">
           <label htmlFor="ifsc-code" className="text-sm font-bold text-white w-28">IFSC Code:</label>
           <input
             type="text"
@@ -73,7 +87,7 @@ const PaymentInfo = () => {
             className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64"
           />
         </div>
-        <div className="flex flex-row w-[450px] justify-between items-center  gap-2 mt-3">
+        <div className="flex flex-row w-[450px] justify-between items-center gap-2 mt-3">
           <label htmlFor="bank-address" className="text-sm font-bold text-white w-48">Bank Address:</label>
           <input
             type="text"
@@ -83,6 +97,17 @@ const PaymentInfo = () => {
             required
             value={invoiceData.paymentInfo?.bankAddress || ''}
             onChange={handleInputChange}
+            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64"
+          />
+        </div>
+        <div className="flex flex-row w-[450px] justify-between items-center gap-2 mt-3">
+          <label htmlFor="qrCode" className="text-sm font-bold text-white w-48">QR Code:</label>
+          <input
+            type="file"
+            id="qrCode"
+            name="qrCode"
+            accept="image/*"
+            onChange={handleQrUpload}
             className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64"
           />
         </div>
