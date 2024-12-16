@@ -28,7 +28,12 @@ const Buttons = () => {
             id: 5,
             name: "Summary", 
             route: "summary"
-        }
+        },
+        {
+          id: 6,
+          name: "Invoice", 
+          route: "invoice"
+      }
     ]
   return (
     <div className='h-[70px] w-full rounded-xl mb-3 bg-[#020817] border text-white border-[#1E293B] box-border  px-4 py-2 flex items-center'> 
