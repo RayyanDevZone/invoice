@@ -58,7 +58,7 @@ const Invoice = () => {
 
         </div>
       </div>
-      <div className="RecieverAddressDate w-full h-[200px] flex flex-row  items-center justify-between px-6">
+      <div className="RecieverAddressDate w-full h-[170px]  flex flex-row  items-center justify-between px-6">
         <div className="BillTo w-[50%] h-full">
           <h1 className="text-2xl font-bold text-gray-800 font-poppins">Bill to:</h1>
           <p className="text-xl font-bold text-gray-800">{invoiceData.receiver.name}</p>
@@ -70,7 +70,7 @@ const Invoice = () => {
         </div>
 
         <div className="invoiceDate w-[50%] h-full flex flex-col justify-start items-end">
-          <div className="flex flex-row w-auto mt-6">
+          <div className="flex flex-row w-auto mt-6 " >
             <h1 className="text-l font-bold text-gray-800 font-poppins">Invoice Date:</h1>
             <p className="text-gray-500 font-semibold px-3">{formatDate(invoiceData.issueDate)}</p>
           </div>
@@ -80,7 +80,7 @@ const Invoice = () => {
           </div>
         </div>
       </div>
-      <div className="itemsTable w-full h-auto min-h-16 flex flex-col border border-gray-400 rounded-md mt-6">
+      <div className="itemsTable w-full h-auto min-h-16 flex flex-col border border-gray-400 rounded-md ">
         <table className="w-full table-auto border-collapse font-poppins text-gray-800 font-semibold font-lexend">
           <thead>
             <tr className="bg-gray-200 border-b border-gray-500">
