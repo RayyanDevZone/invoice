@@ -132,16 +132,21 @@ const Invoice = () => {
           <p className="font-bold text-gray-800">Total in words: {totalInWords(calculateTotal())} {invoiceData.currency}</p>
         </div>
       </div>
-      <div className="additionalNotes w-full mt-3 px-6">
-        <h2 className="font-bold text-blue-600">Additional Notes:</h2>
-        <p className="mt-2">{invoiceData.additionalNotes}</p>
-      </div>
-      <div className="paymentTerms w-full  mt-3 px-6">
-        <h2 className="font-bold text-blue-600">Payment Terms:</h2>
-        <p className="mt-2">{invoiceData.paymentTerms}</p>
-      </div>
-      <div className="accountDetails flex flex-row items-center  justify-between  h-36 w-full px-6 mt-6">
-        <div className='flex flex-col '><p className="font-bold text-gray-800">Please send the payment to these details:</p>
+      {invoiceData.additionalNotes && (
+        <div className="additionalNotes w-full mt-3 px-6">
+          <h2 className="font-bold text-blue-600">Additional Notes:</h2>
+          <p className="mt-2">{invoiceData.additionalNotes}</p>
+        </div>
+      )}
+      {invoiceData.paymentTerms && (
+        <div className="paymentTerms w-full mt-3 px-6">
+          <h2 className="font-bold text-blue-600">Payment Terms:</h2>
+          <p className="mt-2">{invoiceData.paymentTerms}</p>
+        </div>
+      )}
+      <div className="accountDetails flex flex-row items-center justify-between h-36 w-full px-6 mt-6">
+        <div className='flex flex-col '>
+          <p className="font-bold text-gray-800">Please send the payment to these details:</p>
           <p className="font-semibold text-sm text-gray-800">Bank Name: {invoiceData.paymentInfo?.bankName}</p>
           <p className="font-semibold text-sm text-gray-800">Account Name: {invoiceData.paymentInfo?.accountName}</p>
           <p className="font-semibold text-sm text-gray-800">Account Number: {invoiceData.paymentInfo?.accountNumber}</p>
