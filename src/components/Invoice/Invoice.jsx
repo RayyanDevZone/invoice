@@ -49,6 +49,9 @@ const Invoice = () => {
 
   const invoiceGeneratedTime = new Date();
 
+  const shouldDisplayHSN = invoiceData.items.some(item => item.hsn);
+  const shouldDisplayDiscount = invoiceData.items.some(item => invoiceData.discount || item.discount);
+
   return (
     <div className="relative h-[1200px] w-[800px] bg-slate-100 rounded-md text-black box-content py-4 px-3 font-lexend">
       <div className="logoAndAddress w-full h-[250px] flex flex-row items-center justify-between">
@@ -100,10 +103,10 @@ const Invoice = () => {
           <thead>
             <tr className="bg-gray-200 border-b border-gray-500">
               <th className="text-gray-700 font-bold p-1 text-center">Items</th>
-              <th className="text-gray-700 font-bold p-1 text-center">HSN Code</th>
+              {shouldDisplayHSN && <th className="text-gray-700 font-bold p-1 text-center">HSN Code</th>}
               <th className="text-gray-700 font-bold p-1 text-center">Rate</th>
               <th className="text-gray-700 font-bold p-1 text-center">Qty</th>
-              <th className="text-gray-700 font-bold p-1 text-center">Discount</th>
+              {shouldDisplayDiscount && <th className="text-gray-700 font-bold p-1 text-center">Discount</th>}
               <th className="text-gray-700 font-bold p-1 text-center">Amount</th>
             </tr>
           </thead>
@@ -111,10 +114,10 @@ const Invoice = () => {
             {invoiceData.items.map((item, index) => (
               <tr key={index} className="border-b border-gray-500">
                 <td className="p-1 text-center">{item.itemName}</td>
-                <td className="p-1 text-center">{item.hsn}</td>
+                {shouldDisplayHSN && <td className="p-1 text-center">{item.hsn}</td>}
                 <td className="p-1 text-center">{item.rate} {invoiceData.currency}</td>
-                <td className="p-1 text-center">{item.quantity}  {item.unit}</td>
-                <td className="p-1 text-center">{invoiceData.discount || 0}%</td>
+                <td className="p-1 text-center">{item.quantity} {item.unit}</td>
+                {shouldDisplayDiscount && <td className="p-1 text-center">{invoiceData.discount || 0}%</td>}
                 <td className="p-1 text-center">{item.total.toFixed(2)} {invoiceData.currency}</td>
               </tr>
             ))}
@@ -141,6 +144,7 @@ const Invoice = () => {
       {invoiceData.paymentTerms && (
         <div className="paymentTerms w-full mt-3 px-6">
           <h2 className="font-bold text-blue-600">Payment Terms:</h2>
+
           <p className="mt-2">{invoiceData.paymentTerms}</p>
         </div>
       )}
