@@ -32,7 +32,9 @@ const InvoiceDetails = () => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setInvoiceData({ ...invoiceData, logo: e.target.result });
+        const base64String = e.target.result;
+        setInvoiceData({ ...invoiceData, logo: base64String });
+        localStorage.setItem('logo', base64String); // Save logo to local storage
         setLogoUploaded(true); // Set logo uploaded state to true
       };
       reader.readAsDataURL(file);

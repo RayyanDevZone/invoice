@@ -5,6 +5,7 @@ import num2words from 'num2words';
 const Invoice = () => {
   const { invoiceData } = useContext(InvoiceContext);
   const qrCode = localStorage.getItem('qrCode') || '';
+  const logo = localStorage.getItem('logo') || ''; // Fetch logo from local storage
 
   const formatDate = (date) => {
     if (!date) return '';
@@ -53,7 +54,7 @@ const Invoice = () => {
       <div className="logoAndAddress w-full h-[250px] flex flex-row items-center justify-between">
         <div className='h-full w-[50%] flex flex-col items-left justify-around'>
           <div className="logo h-[150px] flex overflow-hidden object-cover bg-center justify-center items-start px-6 flex-col">
-            {invoiceData.logo && <img src={invoiceData.logo} alt="Logo" />}
+            {logo && <img src={logo} alt="Logo" />}
           </div>
           <h1 className="text-xl z-10 h-auto font-bold px-6 text-blue-600">{invoiceData.sender.name || "Company Name"}</h1>
         </div>

@@ -11,26 +11,30 @@ import Navbar from "./components/Navbar/Navbar";
 import InvoiceContainer from "./components/InvoiceContainer/InvoiceContainer";
 import SelfLogo from './components/SelfLogo/SelfLogo';
 import Login from './components/Login/Login'
+import {AuthProvider} from './AuthContext.js'
+import ProtectedRoute from './ProtectedRoute.js';
 
 const Routing = () => {
   return (
-    <Router>
+  <AuthProvider>
+      <Router>
       <Navbar />
       <Buttons />
       <Routes>
         <Route path="/" element={<WelcomePage />} />
-        <Route path="/personal-info" element={<PersonalInfo />} />
-        <Route path="/invoice-details" element={<InvoiceDetails />} />
-        <Route path="/itemsLine" element={<ItemsLine />} />
-        <Route path="/paymentInfo" element={<PaymentInfo />} />
-        <Route path="/summary" element={<Summary />} />
-        <Route path="/invoice" element={<InvoiceContainer />} />
+        <Route path="/personal-info" element={ <ProtectedRoute><PersonalInfo /></ProtectedRoute>} />
+        <Route path="/invoice-details" element={<ProtectedRoute><InvoiceDetails /></ProtectedRoute>} />
+        <Route path="/itemsLine" element={<ProtectedRoute><ItemsLine /></ProtectedRoute>} />
+        <Route path="/paymentInfo" element={<ProtectedRoute><PaymentInfo /></ProtectedRoute>} />
+        <Route path="/summary" element={<ProtectedRoute><Summary /></ProtectedRoute>} />
+        <Route path="/invoice" element={<ProtectedRoute><InvoiceContainer /></ProtectedRoute>} />
         <Route path="/login" element={<Login />} />
         
 
       </Routes>
       <SelfLogo/>
     </Router>
+  </AuthProvider>
   );
 };
 
