@@ -148,26 +148,51 @@ const Invoice = () => {
           <p className="mt-2">{invoiceData.paymentTerms}</p>
         </div>
       )}
-      <div className="accountDetails flex flex-row items-center justify-between h-36 w-full px-6 mt-6">
-        <div className='flex flex-col '>
-          <p className="font-bold text-gray-800">Please send the payment to these details:</p>
-          <p className="font-semibold text-sm text-gray-800">Bank Name: {invoiceData.paymentInfo?.bankName}</p>
-          <p className="font-semibold text-sm text-gray-800">Account Name: {invoiceData.paymentInfo?.accountName}</p>
-          <p className="font-semibold text-sm text-gray-800">Account Number: {invoiceData.paymentInfo?.accountNumber}</p>
-          <p className="font-semibold text-sm text-gray-800">IFSC Code: {invoiceData.paymentInfo?.ifscCode}</p>
-          <p className="font-semibold text-sm text-gray-800">Bank Address: {invoiceData.paymentInfo?.bankAddress}</p></div>
-
-        <div className="h-full w-[140px] ">  {qrCode && (
-          <div className="qr-code h-full w-full">
-            <img src={qrCode} alt="QR Code" className="w-full h-full" />
-          </div>
-        )}</div>
-
+     <div className="accountDetails flex flex-row items-center justify-between h-36 w-full px-6 mt-6">
+  {invoiceData.paymentInfo?.bankName ||
+  invoiceData.paymentInfo?.accountName ||
+  invoiceData.paymentInfo?.accountNumber ||
+  invoiceData.paymentInfo?.ifscCode ||
+  invoiceData.paymentInfo?.bankAddress ? (
+    <div className='flex flex-col '>
+      <p className="font-bold text-gray-800">Please send the payment to these details:</p>
+      {invoiceData.paymentInfo?.bankName && (
+        <p className="font-semibold text-sm text-gray-800">Bank Name: {invoiceData.paymentInfo.bankName}</p>
+      )}
+      {invoiceData.paymentInfo?.accountName && (
+        <p className="font-semibold text-sm text-gray-800">Account Name: {invoiceData.paymentInfo.accountName}</p>
+      )}
+      {invoiceData.paymentInfo?.accountNumber && (
+        <p className="font-semibold text-sm text-gray-800">Account Number: {invoiceData.paymentInfo.accountNumber}</p>
+      )}
+      {invoiceData.paymentInfo?.ifscCode && (
+        <p className="font-semibold text-sm text-gray-800">IFSC Code: {invoiceData.paymentInfo.ifscCode}</p>
+      )}
+      {invoiceData.paymentInfo?.bankAddress && (
+        <p className="font-semibold text-sm text-gray-800">Bank Address: {invoiceData.paymentInfo.bankAddress}</p>
+      )}
+    </div>
+  ) : null}
+  
+  <div className="h-full mb-2 w-[140px] ">
+    {qrCode && (
+      <div className="qr-code h-[90%] w-full">
+        <img src={qrCode} alt="QR Code" className="w-full h-full" />
+        <p>UPI Qr</p>
       </div>
-      <div className="contactDetails h-auto w-full px-6">
-        <p className="text-gray-600">If you have any questions concerning this invoice, use the following contact information:</p>
+    )}
+  </div>
+</div>
+
+      <div className="contactDetails flex flex-row align-center justify-between h-[160px] border border-black h-auto w-full px-6">
+       <div>
+       <p className="text-gray-600">If you have any questions concerning this invoice,<br/> use the following contact information:</p>
         <p className="text-gray-600">Phone: {invoiceData.sender.phone}</p>
         <p className="text-gray-600">Email: {invoiceData.sender.email}</p>
+       </div>
+       <div className="signatory h-full w-[40%] border border-black">
+
+       </div>
       </div>
       <div className="contactDetails h-auto w-full px-6 mt-6 flex justify-end items-end self-end absolute bottom-0 mb-4">
         <p className="text-blue-600">Made using: BillEase</p>
