@@ -23,7 +23,7 @@ const Login = () => {
   };
 
   return (
-    <div className='h-[500px] w-[350px] bg-[#020817] rounded-md flex flex-col items-center justify-center p-4'>
+    <div className='h-[500px] w-[350px] bg-[#020817] rounded-md flex flex-col items-center font-lexend justify-center p-4'>
       <h2 className='text-white text-2xl mb-4'>Login</h2>
       <form onSubmit={handleLogin} className='w-full'>
         <div className='mb-4'>

@@ -184,14 +184,14 @@ const Invoice = () => {
   </div>
 </div>
 
-      <div className="contactDetails flex flex-row align-center justify-between h-[160px] border border-black h-auto w-full px-6">
+      <div className="contactDetails flex flex-row align-center justify-between h-[160px]  h-auto w-full px-6">
        <div>
        <p className="text-gray-600">If you have any questions concerning this invoice,<br/> use the following contact information:</p>
         <p className="text-gray-600">Phone: {invoiceData.sender.phone}</p>
         <p className="text-gray-600">Email: {invoiceData.sender.email}</p>
        </div>
-       <div className="signatory h-full w-[40%] border border-black">
-
+       <div className="signatory h-full w-[40%]  flex flex-col text-center justify-end">
+<p className="text-xs">Authorised Signatory for {invoiceData.sender.name}</p>
        </div>
       </div>
       <div className="contactDetails h-auto w-full px-6 mt-6 flex justify-end items-end self-end absolute bottom-0 mb-4">

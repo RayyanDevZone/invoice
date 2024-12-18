@@ -13,6 +13,7 @@ const Summary = () => {
   const [isTaxEnabled, setIsTaxEnabled] = useState(false);
   const [isShippingEnabled, setIsShippingEnabled] = useState(false);
 
+
   const handleNotesChange = (e) => {
     setInvoiceData({ ...invoiceData, additionalNotes: e.target.value });
   };
@@ -63,7 +64,8 @@ const Summary = () => {
             onChange={() => setIsShippingEnabled(!isShippingEnabled)}
           />{" "}
           Shipping
-        </label>
+        </label>{" "}
+   
       </div>
       <div className="fields">
          {isDiscountEnabled && <DiscountField value={invoiceData.discount} onChange={handleDiscountChange} />}
