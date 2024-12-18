@@ -12,7 +12,7 @@ const Summary = () => {
   const [isDiscountEnabled, setIsDiscountEnabled] = useState(false);
   const [isTaxEnabled, setIsTaxEnabled] = useState(false);
   const [isShippingEnabled, setIsShippingEnabled] = useState(false);
-  const [isSignatoryEnabled, setIsSignatoryEnabled] = useState(false); // New state for Signatory toggle
+
 
   const handleNotesChange = (e) => {
     setInvoiceData({ ...invoiceData, additionalNotes: e.target.value });
@@ -65,14 +65,7 @@ const Summary = () => {
           />{" "}
           Shipping
         </label>{" "}
-        <label>
-          <input
-            type="checkbox"
-            checked={isSignatoryEnabled}
-            onChange={() => setIsSignatoryEnabled(!isSignatoryEnabled)}
-          />{" "}
-          Signatory
-        </label>{" "}
+      
       </div>
       <div className="fields">
         {isDiscountEnabled && (
