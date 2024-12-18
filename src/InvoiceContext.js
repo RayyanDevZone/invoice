@@ -30,11 +30,20 @@ export const InvoiceProvider = ({ children }) => {
     dueDate: '',
     discount: 0,
     tax: 0,
-    shipping: 0
+    shipping: 0,
+    signatory: false, // Add the signatory toggle directly to invoiceData
   });
 
+  // Function to update the signatory toggle
+  const toggleSignatory = () => {
+    setInvoiceData((prevState) => ({
+      ...prevState,
+      signatory: !prevState.signatory, // Toggle the signatory
+    }));
+  };
+
   return (
-    <InvoiceContext.Provider value={{ invoiceData, setInvoiceData }}>
+    <InvoiceContext.Provider value={{ invoiceData, setInvoiceData, toggleSignatory }}>
       {children}
     </InvoiceContext.Provider>
   );

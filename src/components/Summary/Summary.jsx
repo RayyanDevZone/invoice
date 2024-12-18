@@ -12,7 +12,7 @@ const Summary = () => {
   const [isDiscountEnabled, setIsDiscountEnabled] = useState(false);
   const [isTaxEnabled, setIsTaxEnabled] = useState(false);
   const [isShippingEnabled, setIsShippingEnabled] = useState(false);
-
+  const [isSignatoryEnabled, setIsSignatoryEnabled] = useState(false); // New state for Signatory toggle
 
   const handleNotesChange = (e) => {
     setInvoiceData({ ...invoiceData, additionalNotes: e.target.value });
@@ -47,7 +47,7 @@ const Summary = () => {
             checked={isDiscountEnabled}
             onChange={() => setIsDiscountEnabled(!isDiscountEnabled)}
           />{" "}
-          Discount 
+          Discount
         </label>{" "}
         <label>
           <input
@@ -65,12 +65,23 @@ const Summary = () => {
           />{" "}
           Shipping
         </label>{" "}
-   
+        <label>
+          <input
+            type="checkbox"
+            checked={isSignatoryEnabled}
+            onChange={() => setIsSignatoryEnabled(!isSignatoryEnabled)}
+          />{" "}
+          Signatory
+        </label>{" "}
       </div>
       <div className="fields">
-         {isDiscountEnabled && <DiscountField value={invoiceData.discount} onChange={handleDiscountChange} />}
-          {isTaxEnabled && <TaxField value={invoiceData.tax} onChange={handleTaxChange} />} 
-          {isShippingEnabled && <ShippingField value={invoiceData.shipping} onChange={handleShippingChange} />} 
+        {isDiscountEnabled && (
+          <DiscountField value={invoiceData.discount} onChange={handleDiscountChange} />
+        )}
+        {isTaxEnabled && <TaxField value={invoiceData.tax} onChange={handleTaxChange} />}
+        {isShippingEnabled && (
+          <ShippingField value={invoiceData.shipping} onChange={handleShippingChange} />
+        )}
       </div>
       <div className="flex flex-col">
         <label htmlFor="invoiceName">Invoice Name:</label>
@@ -78,7 +89,7 @@ const Summary = () => {
           type="text"
           id="invoiceName"
           placeholder="Invoice Name"
-          value={invoiceData.invoiceName || ''}
+          value={invoiceData.invoiceName || ""}
           onChange={handleInvoiceNameChange}
           className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-80"
         />
