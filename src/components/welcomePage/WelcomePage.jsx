@@ -5,7 +5,7 @@ import { FaLocationArrow } from "react-icons/fa";
 const WelcomePage = () => {
   const navigate = useNavigate();
   return (
-    <div className="h-screen w-full text-5xl bg-zinc-900 text-white flex  flex-col font-lexend justify-center items-center">
+    <div className="h-screen w-full text-5xl bg-zinc-900 text-white flex  flex-col font-lexend justify-start pt-20 items-center">
       <h1 className="my-4 font-bold ">Welcome </h1>
       <h2 className="text-3xl">To</h2>
       <h1 className="my-4">Bill Ease</h1>

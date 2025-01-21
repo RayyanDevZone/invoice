@@ -18,9 +18,9 @@ const PersonalInfo = () => {
   };
 
   return (
-    <div className="h-screen w-full rounded-t-xl box-border py-5 px-4 text-white flex flex-row bg-[#020817] justify-between items-center font-lexend">
-      <div className="w-[50%] h-full box-border py-4 px-3">
-        <h3 className="text-white font-bold text-xl">Bill From:</h3>
+    <div className="min-h-screen w-full rounded-t-xl box-border py-5 px-4 text-white flex flex-col sm:flex-row bg-[#020817] justify-between items-center font-lexend">
+      <div className="sm:w-[50%] h-full border-b border-[#1E293b] sm:border-none w-full box-border py-4 px-3">
+        <h3 className="text-white font-bold text-xl mb-2">Bill From:</h3>
         <div className="flex flex-col gap-2">
           {["name", "address", "zip", "city", "country", "email", "phone", "gstReg"].map((field) => (
             <div key={field} className="flex items-center gap-4">
@@ -45,7 +45,7 @@ const PersonalInfo = () => {
 
         </div>
       </div>
-      <div className="w-[50%] h-full">
+      <div className="sm:w-[50%] w-full h-full">
         <div className="h-full box-border py-4 px-3">
           <h3 className="text-white font-bold text-xl">Bill To:</h3>
           <div className="flex flex-col gap-2">
