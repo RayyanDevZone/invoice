@@ -35,7 +35,7 @@ const PaymentInfo = () => {
     <div className="h-screen w-full rounded-t-xl box-border py-5 px-4 text-white flex flex-col bg-[#020817] items-left font-lexend">
       <h1 className="text-white text-2xl font-semibold">Payment Information:</h1>
       <div className="flex flex-col w-[70%] items-start justify-around">
-        <div className="flex flex-row w-[450px] justify-between items-center gap-2 mt-3">
+        <div className="flex flex-row w-[400px] sm:w-[450px] justify-between items-center gap-2 mt-3">
           <label htmlFor="bank-name" className="text-sm font-bold text-white w-28">Bank Name:</label>
           <input
             type="text"
@@ -45,10 +45,10 @@ const PaymentInfo = () => {
             required
             value={invoiceData.paymentInfo?.bankName || ''}
             onChange={handleInputChange}
-            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64"
+            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 sm:w-64"
           />
         </div>
-        <div className="flex flex-row w-[450px] justify-center items-center gap-2 mt-3">
+        <div className="flex flex-row w-[400px] sm:w-[450px] justify-center items-center gap-2 mt-3">
           <label htmlFor="account-name" className="text-sm font-bold text-white w-48">Account Holder Name:</label>
           <input
             type="text"
@@ -58,10 +58,10 @@ const PaymentInfo = () => {
             required
             value={invoiceData.paymentInfo?.accountName || ''}
             onChange={handleInputChange}
-            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64"
+            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 sm:w-64"
           />
         </div>
-        <div className="flex flex-row w-[450px] justify-between items-center gap-2 mt-3">
+        <div className="flex flex-row w-[400px] sm:w-[450px] justify-between items-center gap-2 mt-3">
           <label htmlFor="accountNumber" className="text-sm font-bold text-white w-36">Account Number:</label>
           <input
             type="number"
@@ -71,10 +71,10 @@ const PaymentInfo = () => {
             required
             value={invoiceData.paymentInfo?.accountNumber || ''}
             onChange={handleInputChange}
-            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64 no-spinners"
+            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 sm:w-64 no-spinners"
           />
         </div>
-        <div className="flex flex-row w-[450px] justify-between items-center gap-2 mt-3">
+        <div className="flex flex-row w-[400px] sm:w-[450px] justify-between items-center gap-2 mt-3">
           <label htmlFor="ifsc-code" className="text-sm font-bold text-white w-28">IFSC Code:</label>
           <input
             type="text"
@@ -84,10 +84,10 @@ const PaymentInfo = () => {
             required
             value={invoiceData.paymentInfo?.ifscCode || ''}
             onChange={handleInputChange}
-            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64"
+            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 sm:w-64"
           />
         </div>
-        <div className="flex flex-row w-[450px] justify-between items-center gap-2 mt-3">
+        <div className="flex flex-row w-[400px] sm:w-[450px] justify-between items-center gap-2 mt-3">
           <label htmlFor="bank-address" className="text-sm font-bold text-white w-48">Bank Address:</label>
           <input
             type="text"
@@ -97,10 +97,10 @@ const PaymentInfo = () => {
             required
             value={invoiceData.paymentInfo?.bankAddress || ''}
             onChange={handleInputChange}
-            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64"
+            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 sm:w-64"
           />
         </div>
-        <div className="flex flex-row w-[450px] justify-between items-center gap-2 mt-3">
+        <div className="flex flex-row w-[400px] sm:w-[450px] justify-between items-center gap-2 mt-3">
           <label htmlFor="qrCode" className="text-sm font-bold text-white w-48">QR Code:</label>
           <input
             type="file"
