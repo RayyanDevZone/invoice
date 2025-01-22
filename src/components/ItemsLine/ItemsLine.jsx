@@ -33,16 +33,16 @@ const ItemsLine = () => {
   return (
     <div className="min-h-screen h-auto w-full rounded-t-xl box-border py-5 px-4 text-white flex flex-col bg-[#020817] items-left font-lexend">
       {invoiceData.items.map((item, index) => (
-        <div key={index} className="w-[85%] h-[70%] bg-slate-800 border border-slate-500 justify-between flex flex-col rounded-lg px-8 py-4 mb-4">
+        <div key={index} className="sm:w-[85%] h-[70%] bg-slate-800 border border-slate-500 justify-between flex flex-col rounded-lg px-8 py-4 mb-4">
           <p className="text-md font-bold text-white flex flex-row w-full justify-between">
             {item.itemName || `#${index + 1}-NAME`}
             <div className="text-xl cursor-pointer" onClick={() => removeItem(index)}>
               <RxCross2 />
             </div>
           </p>
-          <div className="flex flex-row w-full items-center justify-between">
+          <div className="flex flex-row w-full flex-wrap items-center justify-between">
             <div className="flex flex-col items-left gap-2 mt-3">
-              <label htmlFor={`item-name-${index}`} className="text-sm font-bold text-white w-20">Name :</label>
+              <label htmlFor={`item-name-${index}`} className="text-sm font-bold   text-white w-20">Name :</label>
               <input
                 type="text"
                 id={`item-name-${index}`}
