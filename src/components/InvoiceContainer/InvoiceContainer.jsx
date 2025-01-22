@@ -50,7 +50,7 @@ const InvoiceContainer = () => {
       <div ref={componentRef}>
         <Invoice />
       </div>
-      <div className='h-[200px] w-[500px] bg-[#020817] flex flex-row items-center justify-around rounded-xl mt-5 border-[#1E293B] border font-lexend'>
+      <div className='h-[200px] sm:w-[500px] w-[300px] bg-[#020817] flex sm:flex-row flex-col items-center justify-around rounded-xl mt-5 border-[#1E293B] border font-lexend'>
         <button 
           className='bg-[#020817] text-white border border-[#1E293B] px-2 py-1 w-[180px] rounded-md flex flex-row items-center justify-evenly'
           onClick={handleNewInvoice}
