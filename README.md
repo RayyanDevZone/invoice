@@ -78,7 +78,7 @@
 ### Installation
 
 ```bash
-git clone https://github.com/SRayyan555/invoice.git
+git clone https://github.com/RayyanDevZone/invoice.git
 cd invoice
 npm install
 ```
