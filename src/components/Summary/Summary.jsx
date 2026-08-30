@@ -3,16 +3,19 @@ import DiscountField from "../DiscountField/DiscountField";
 import TaxField from "../TaxField/TaxField";
 import ShippingField from "../ShippingField/ShippingField";
 import { useNavigate } from "react-router-dom";
-import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
-import { InvoiceContext } from "../../InvoiceContext"; // Import the context
+import { InvoiceContext } from "../../InvoiceContext";
+import Card from "../ui/Card";
+import StepHeader from "../ui/StepHeader";
+import StepFooter from "../ui/StepFooter";
+import Toggle from "../ui/Toggle";
+import { TextField, TextAreaField } from "../ui/Field";
 
 const Summary = () => {
   const navigate = useNavigate();
   const { invoiceData, setInvoiceData } = useContext(InvoiceContext);
-  const [isDiscountEnabled, setIsDiscountEnabled] = useState(false);
-  const [isTaxEnabled, setIsTaxEnabled] = useState(false);
-  const [isShippingEnabled, setIsShippingEnabled] = useState(false);
-
+  const [isDiscountEnabled, setIsDiscountEnabled] = useState(Boolean(invoiceData.discount));
+  const [isTaxEnabled, setIsTaxEnabled] = useState(Boolean(invoiceData.tax));
+  const [isShippingEnabled, setIsShippingEnabled] = useState(Boolean(invoiceData.shipping));
 
   const handleNotesChange = (e) => {
     setInvoiceData({ ...invoiceData, additionalNotes: e.target.value });
@@ -39,94 +42,63 @@ const Summary = () => {
   };
 
   return (
-    <div className="min-h-screen h-auto w-full rounded-t-xl box-border py-5 px-4 text-white flex flex-col bg-[#020817] items-left font-lexend">
-      <div className="toggles my-4">
-        <label>
-          <input
-            type="checkbox"
-            checked={isDiscountEnabled}
-            onChange={() => setIsDiscountEnabled(!isDiscountEnabled)}
-          />{" "}
-          Discount
-        </label>{" "}
-        <label>
-          <input
-            type="checkbox"
-            checked={isTaxEnabled}
-            onChange={() => setIsTaxEnabled(!isTaxEnabled)}
-          />{" "}
-          Tax
-        </label>{" "}
-        <label>
-          <input
-            type="checkbox"
-            checked={isShippingEnabled}
-            onChange={() => setIsShippingEnabled(!isShippingEnabled)}
-          />{" "}
-          Shipping
-        </label>{" "}
-      
-      </div>
-      <div className="fields">
-        {isDiscountEnabled && (
-          <DiscountField value={invoiceData.discount} onChange={handleDiscountChange} />
-        )}
-        {isTaxEnabled && <TaxField value={invoiceData.tax} onChange={handleTaxChange} />}
-        {isShippingEnabled && (
-          <ShippingField value={invoiceData.shipping} onChange={handleShippingChange} />
-        )}
-      </div>
-      <div className="flex flex-col">
-        <label htmlFor="invoiceName">Invoice Name:</label>
-        <input
-          type="text"
-          id="invoiceName"
-          placeholder="Invoice Name"
+    <div className="w-full max-w-5xl">
+      <StepHeader
+        eyebrow="Step 5 of 6"
+        title="Summary"
+        description="Add optional charges, notes and terms before generating the invoice."
+      />
+      <Card className="box-border py-6 px-6 sm:px-8 flex flex-col gap-6">
+        <div>
+          <p className="text-sm font-medium text-gray-600 mb-3">Additional charges</p>
+          <div className="flex flex-wrap gap-6">
+            <Toggle checked={isDiscountEnabled} onChange={setIsDiscountEnabled} label="Discount" />
+            <Toggle checked={isTaxEnabled} onChange={setIsTaxEnabled} label="Tax" />
+            <Toggle checked={isShippingEnabled} onChange={setIsShippingEnabled} label="Shipping" />
+          </div>
+          {(isDiscountEnabled || isTaxEnabled || isShippingEnabled) && (
+            <div className="flex flex-wrap gap-4 mt-4">
+              {isDiscountEnabled && (
+                <DiscountField value={invoiceData.discount} onChange={handleDiscountChange} />
+              )}
+              {isTaxEnabled && <TaxField value={invoiceData.tax} onChange={handleTaxChange} />}
+              {isShippingEnabled && (
+                <ShippingField value={invoiceData.shipping} onChange={handleShippingChange} />
+              )}
+            </div>
+          )}
+        </div>
+
+        <TextField
+          label="Invoice Name"
+          placeholder="e.g. Invoice for Acme Corp"
           value={invoiceData.invoiceName || ""}
           onChange={handleInvoiceNameChange}
-          className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-80"
+          className="max-w-sm"
         />
-      </div>
-      <div>
-        <div className="flex flex-col mt-4">
-          <label>Additional notes:</label>
-          <textarea
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <TextAreaField
+            label="Additional notes"
             rows="4"
-            cols="50"
             placeholder="Your additional notes here"
             value={invoiceData.additionalNotes}
             onChange={handleNotesChange}
-            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-80"
-          ></textarea>
-        </div>
-        <div className="flex flex-col mt-4">
-          <label>Payment terms:</label>
-          <textarea
+          />
+          <TextAreaField
+            label="Payment terms"
             rows="4"
-            cols="50"
             placeholder="Ex: Credit time period"
             value={invoiceData.paymentTerms}
             onChange={handlePaymentTermsChange}
-            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-80"
-          ></textarea>
+          />
         </div>
-      </div>
-      <div className="flex flex-row w-auto justify-end">
-        <button
-          type="button"
-          onClick={() => navigate("/paymentInfo")}
-          className="bg-white hover:bg-zinc-200 mt-12 w-36 flex justify-around items-center text-[#020817] font-bold py-2 px-4 rounded"
-        >
-          <GrFormPreviousLink className="text-2xl" /> Back
-        </button>
-        <button
-          type="button"
-          onClick={() => navigate("/invoice")}
-          className="bg-white hover:bg-zinc-200 mt-12 w-36 mx-4 flex justify-around items-center text-[#020817] font-bold py-2 px-4 rounded"
-        >
-          Generate <GrFormNextLink className="text-2xl" />
-        </button>
-      </div>
+      </Card>
+      <StepFooter
+        onBack={() => navigate("/paymentInfo")}
+        onNext={() => navigate("/invoice")}
+        nextLabel="Generate invoice"
+      />
     </div>
   );
 };

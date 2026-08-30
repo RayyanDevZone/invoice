@@ -1,0 +1,94 @@
+/* Restyles react-datepicker's popover calendar to match the shadcn/ui date picker look. */
+
+.sc-datepicker-popper {
+  z-index: 50;
+}
+
+.sc-datepicker.react-datepicker {
+  font-family: 'Google Sans Flex', sans-serif;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.sc-datepicker .react-datepicker__month-container {
+  float: none;
+}
+
+.sc-datepicker .react-datepicker__header {
+  background: #ffffff;
+  border-bottom: 1px solid #f3f4f6;
+  padding: 0.5rem 0 0;
+}
+
+.sc-datepicker .react-datepicker__day-names {
+  display: flex;
+  justify-content: space-around;
+  margin: 0.25rem 0.5rem 0;
+}
+
+.sc-datepicker .react-datepicker__day-name {
+  width: 2rem;
+  line-height: 2rem;
+  margin: 0.1rem;
+  color: #9ca3af;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.sc-datepicker .react-datepicker__month {
+  margin: 0.5rem;
+}
+
+.sc-datepicker .react-datepicker__week {
+  display: flex;
+  justify-content: space-around;
+}
+
+.sc-datepicker .react-datepicker__day {
+  width: 2rem;
+  line-height: 2rem;
+  margin: 0.1rem;
+  border-radius: 0.5rem;
+  color: #374151;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.sc-datepicker .react-datepicker__day:hover {
+  background-color: #f3f4f6;
+  border-radius: 0.5rem;
+}
+
+.sc-datepicker .react-datepicker__day--outside-month {
+  color: #d1d5db;
+}
+
+.sc-datepicker .react-datepicker__day--selected,
+.sc-datepicker .react-datepicker__day--keyboard-selected {
+  background-color: #B1EB8A;
+  color: #111827;
+  font-weight: 700;
+}
+
+.sc-datepicker .react-datepicker__day--selected:hover,
+.sc-datepicker .react-datepicker__day--keyboard-selected:hover {
+  background-color: #B1EB8A;
+  opacity: 0.85;
+}
+
+.sc-datepicker .react-datepicker__day--today {
+  font-weight: 700;
+}
+
+.sc-datepicker .react-datepicker__day--disabled {
+  color: #e5e7eb;
+  cursor: not-allowed;
+}
+
+.sc-datepicker .react-datepicker__day--disabled:hover {
+  background-color: transparent;
+}

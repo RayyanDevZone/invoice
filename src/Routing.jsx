@@ -6,35 +6,37 @@ import WelcomePage from "./components/welcomePage/WelcomePage";
 import ItemsLine from "./components/ItemsLine/ItemsLine";
 import PaymentInfo from "./components/PaymentInfo/PaymentInfo";
 import Summary from "./components/Summary/Summary";
-import Buttons from "./components/Buttons/Buttons";
+import Sidebar from "./components/Sidebar/Sidebar";
 import Navbar from "./components/Navbar/Navbar";
 import InvoiceContainer from "./components/InvoiceContainer/InvoiceContainer";
 import SelfLogo from './components/SelfLogo/SelfLogo';
-import Login from './components/Login/Login'
-import {AuthProvider} from './AuthContext.js'
-import ProtectedRoute from './ProtectedRoute.js';
+
+const StepLayout = ({ children }) => (
+  <div className="flex flex-1 w-full">
+    <Sidebar />
+    <main className="flex-1 min-w-0 box-border py-8 px-4 sm:px-10 flex flex-col items-start">
+      {children}
+    </main>
+  </div>
+);
 
 const Routing = () => {
   return (
-  <AuthProvider>
-      <Router>
-      <Navbar />
-      <Buttons />
-      <Routes>
-        <Route path="/" element={<WelcomePage />} />
-        <Route path="/personal-info" element={ <ProtectedRoute><PersonalInfo /></ProtectedRoute>} />
-        <Route path="/invoice-details" element={<ProtectedRoute><InvoiceDetails /></ProtectedRoute>} />
-        <Route path="/itemsLine" element={<ProtectedRoute><ItemsLine /></ProtectedRoute>} />
-        <Route path="/paymentInfo" element={<ProtectedRoute><PaymentInfo /></ProtectedRoute>} />
-        <Route path="/summary" element={<ProtectedRoute><Summary /></ProtectedRoute>} />
-        <Route path="/invoice" element={<ProtectedRoute><InvoiceContainer /></ProtectedRoute>} />
-        <Route path="/login" element={<Login />} />
-        
-
-      </Routes>
-      <SelfLogo/>
+    <Router>
+      <div className="min-h-screen w-full flex flex-col bg-gray-50">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<WelcomePage />} />
+          <Route path="/personal-info" element={<StepLayout><PersonalInfo /></StepLayout>} />
+          <Route path="/invoice-details" element={<StepLayout><InvoiceDetails /></StepLayout>} />
+          <Route path="/itemsLine" element={<StepLayout><ItemsLine /></StepLayout>} />
+          <Route path="/paymentInfo" element={<StepLayout><PaymentInfo /></StepLayout>} />
+          <Route path="/summary" element={<StepLayout><Summary /></StepLayout>} />
+          <Route path="/invoice" element={<StepLayout><InvoiceContainer /></StepLayout>} />
+        </Routes>
+        <SelfLogo />
+      </div>
     </Router>
-  </AuthProvider>
   );
 };
 

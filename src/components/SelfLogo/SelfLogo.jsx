@@ -2,10 +2,9 @@ import React from 'react'
 
 const SelfLogo = () => {
   return (
-    <div className='w-full h-[50px] bg-[#020817] flex flex-row px-6 items-center justify-start mt-3 rounded-t-md'>
-    <h1 className='font-lexend text-white font-bold '>Made By :- SYED AHMAD RAYYAN</h1>
-      
-    </div>
+    <footer className='w-full h-12 shrink-0 bg-white flex flex-row px-6 sm:px-8 items-center justify-start border-t border-gray-200'>
+      <p className='font-google-sans text-gray-400 text-xs font-semibold'>Made by Syed Ahmad Rayyan</p>
+    </footer>
   )
 }
 

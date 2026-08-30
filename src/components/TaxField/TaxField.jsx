@@ -1,21 +1,18 @@
-// components/TaxField.jsx
 import React from "react";
-import "../../custom.css"; // Import the custom CSS
+import { TextField } from "../ui/Field";
 
-const TaxField = ({ value, onChange }) => {
-  return (
-    <div className="field my-4">
-      <label>Tax %:</label>
-      <input
-        type="number"
-        name="tax"
-        placeholder="Enter tax"
-        value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
-        className="bg-[#020817] border border-[#1E293B] mx-2 rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-48 placeholder:font-montserrat no-spinners" // Apply the custom class
-      />
-    </div>
-  );
-};
+const TaxField = ({ value, onChange }) => (
+  <TextField
+    label="Tax"
+    type="number"
+    name="tax"
+    placeholder="0"
+    suffix="%"
+    value={value}
+    onChange={(e) => onChange(Number(e.target.value))}
+    className="w-full sm:w-48"
+    inputClassName="no-spinners"
+  />
+);
 
 export default TaxField;

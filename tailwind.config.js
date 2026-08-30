@@ -6,6 +6,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        brand: {
+          DEFAULT: '#B1EB8A',
+          dark: '#4C8A2E',
+        },
+      },
       fontFamily: {
         montserrat: ['Montserrat', 'sans-serif'], // Add Montserrat font here
         raleway: ['Roboto', 'sans-serif'], // Add Roboto font here

@@ -1,11 +1,13 @@
 import React, { useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Invoice from '../Invoice/Invoice';
-import { FiDownload } from "react-icons/fi";
-import { FaPlus } from "react-icons/fa6";
+import { LuDownload, LuPlus } from "react-icons/lu";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { InvoiceContext } from '../../InvoiceContext'; // Assuming you have this context set up
+import Invoice from '../Invoice/Invoice';
+import { InvoiceContext } from '../../InvoiceContext';
+import Card from '../ui/Card';
+import StepHeader from '../ui/StepHeader';
+import Button from '../ui/Button';
 
 const InvoiceContainer = () => {
   const componentRef = useRef();
@@ -32,37 +34,36 @@ const InvoiceContainer = () => {
   };
 
   const handleNewInvoice = () => {
-    // Clear only the receiver details and related information
     setInvoiceData({
-      ...invoiceData, // Retain the current invoiceData
-      receiver: {}, // Clear receiver details
-      items: [], // Clear items
-      additionalNotes: '', // Clear additional notes
-      paymentTerms: '' // Clear payment terms
+      ...invoiceData,
+      receiver: {},
+      items: [],
+      additionalNotes: '',
+      paymentTerms: ''
     });
 
-    // Navigate to the personal info page
     navigate('/personal-info');
   };
 
   return (
-    <div className='min-h-screen w-full flex flex-col items-center'>
-      <div ref={componentRef}>
-        <Invoice />
-      </div>
-      <div className='h-[200px] sm:w-[500px] w-[300px] bg-[#020817] flex sm:flex-row flex-col items-center justify-around rounded-xl mt-5 border-[#1E293B] border font-lexend'>
-        <button 
-          className='bg-[#020817] text-white border border-[#1E293B] px-2 py-1 w-[180px] rounded-md flex flex-row items-center justify-evenly'
-          onClick={handleNewInvoice}
-        >
-          NEW INVOICE <FaPlus />
-        </button>
-        <button 
-          className='bg-white text-[#020817] px-2 py-1 w-[180px] rounded-md flex flex-row items-center justify-evenly'
-          onClick={handleDownloadPDF}
-        >
-          DOWNLOAD <FiDownload className='text-md font-bold' />
-        </button>
+    <div className='w-full max-w-5xl flex flex-col items-center'>
+      <StepHeader
+        eyebrow="Step 6 of 6"
+        title="Your invoice is ready"
+        description="Review the preview below, then download it as a PDF or start a new invoice."
+      />
+      <Card className="p-4 sm:p-8 flex justify-center overflow-x-auto">
+        <div ref={componentRef}>
+          <Invoice />
+        </div>
+      </Card>
+      <div className='w-full sm:w-auto flex sm:flex-row flex-col items-center justify-center gap-3 mt-6'>
+        <Button variant="secondary" icon={LuPlus} iconPosition="left" onClick={handleNewInvoice}>
+          New invoice
+        </Button>
+        <Button variant="primary" icon={LuDownload} iconPosition="right" onClick={handleDownloadPDF}>
+          Download PDF
+        </Button>
       </div>
     </div>
   );

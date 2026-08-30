@@ -1,9 +1,18 @@
 import React, { useContext } from "react";
-import { FaPlus } from "react-icons/fa6";
+import { LuPlus, LuX, LuPackage } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
-import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
-import { RxCross2 } from "react-icons/rx";
-import { InvoiceContext } from "../../InvoiceContext"; // Import the context
+import { InvoiceContext } from "../../InvoiceContext";
+import Card from "../ui/Card";
+import StepHeader from "../ui/StepHeader";
+import StepFooter from "../ui/StepFooter";
+import Button from "../ui/Button";
+import Select from "../ui/Select";
+import { TextField, TextAreaField } from "../ui/Field";
+
+const unitOptions = ["Kg", "Piece/Pieces", "Bag", "Box", "Quintal", "Tonne", "Bundle"].map((u) => ({
+  value: u,
+  label: u,
+}));
 
 const ItemsLine = () => {
   const navigate = useNavigate();
@@ -21,7 +30,7 @@ const ItemsLine = () => {
   const addItem = () => {
     setInvoiceData({
       ...invoiceData,
-      items: [...invoiceData.items, { itemName: '', quantity: '', rate: '', hsn: '', total: 0, unit: 'Kg' }]
+      items: [...invoiceData.items, { itemName: '', quantity: '', rate: '', hsn: '', total: 0, unit: 'Kg', description: '' }]
     });
   };
 
@@ -31,122 +40,115 @@ const ItemsLine = () => {
   };
 
   return (
-    <div className="min-h-screen h-auto w-full rounded-t-xl box-border py-5 px-4 text-white flex flex-col bg-[#020817] items-left font-lexend">
-      {invoiceData.items.map((item, index) => (
-        <div key={index} className="sm:w-[85%] h-[70%] bg-slate-800 border border-slate-500 justify-between flex flex-col rounded-lg px-8 py-4 mb-4">
-          <p className="text-md font-bold text-white flex flex-row w-full justify-between">
-            {item.itemName || `#${index + 1}-NAME`}
-            <div className="text-xl cursor-pointer" onClick={() => removeItem(index)}>
-              <RxCross2 />
+    <div className="w-full max-w-5xl">
+      <StepHeader
+        eyebrow="Step 3 of 6"
+        title="Items"
+        description="Add every line item that should appear on the invoice."
+      />
+
+      {invoiceData.items.length === 0 && (
+        <Card className="flex flex-col items-center justify-center text-center py-14 px-6 mb-4">
+          <span className="h-12 w-12 rounded-full bg-brand/30 flex items-center justify-center mb-3">
+            <LuPackage className="text-brand-dark text-xl" />
+          </span>
+          <p className="text-gray-700 font-semibold">No items yet</p>
+          <p className="text-sm text-gray-400 mt-1">Add your first line item to get started.</p>
+        </Card>
+      )}
+
+      <div className="flex flex-col gap-4">
+        {invoiceData.items.map((item, index) => (
+          <Card key={index} className="px-6 py-5">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2.5">
+                <span className="h-7 w-7 rounded-full bg-gray-100 text-gray-500 text-xs font-bold flex items-center justify-center shrink-0">
+                  {index + 1}
+                </span>
+                <p className="text-sm font-bold text-gray-900">
+                  {item.itemName || `Item ${index + 1}`}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => removeItem(index)}
+                aria-label="Remove item"
+                className="h-7 w-7 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+              >
+                <LuX className="text-base" />
+              </button>
             </div>
-          </p>
-          <div className="flex flex-row w-full flex-wrap items-center justify-between">
-            <div className="flex flex-col items-left gap-2 mt-3">
-              <label htmlFor={`item-name-${index}`} className="text-sm font-bold   text-white w-20">Name :</label>
-              <input
-                type="text"
-                id={`item-name-${index}`}
+
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+              <TextField
+                label="Name"
+                className="col-span-2 sm:col-span-1"
                 placeholder="Item name"
                 required
                 value={item.itemName}
                 onChange={(e) => handleInputChange(index, 'itemName', e.target.value)}
-                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40"
               />
-            </div>
-            <div className="flex flex-col items-left gap-2 mt-3">
-              <label htmlFor={`item-quantity-${index}`} className="text-sm font-bold text-white w-20">Quantity:</label>
-              <input
+              <TextField
+                label="Quantity"
                 type="number"
-                id={`item-quantity-${index}`}
                 placeholder="0"
                 required
                 value={item.quantity}
                 onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
-                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40 no-spinners"
+                inputClassName="no-spinners"
               />
-            </div>
-            <div className="flex flex-col items-left gap-2 mt-3">
-              <label htmlFor={`item-unit-${index}`} className="text-sm font-bold text-white w-20">Unit:</label>
-              <select
-                id={`item-unit-${index}`}
+              <Select
+                label="Unit"
                 value={item.unit}
-                onChange={(e) => handleInputChange(index, 'unit', e.target.value)}
-                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40"
-              >
-                <option value="Kg">Kg</option>
-                <option value="Piece/Pieces">Piece/Pieces</option>
-                <option value="Bag">Bag</option>
-                <option value="Box">Box</option>
-                <option value="Quintal">Quintal</option>
-                <option value="Tonne">Tonne</option>
-                <option value="Bundle">Bundle</option>
-              </select>
-            </div>
-            <div className="flex flex-col items-left gap-2 mt-3">
-              <label htmlFor={`item-rate-${index}`} className="text-sm font-bold text-white w-20">Rate :</label>
-              <input
+                onChange={(value) => handleInputChange(index, 'unit', value)}
+                options={unitOptions}
+                searchable={false}
+              />
+              <TextField
+                label="Rate"
                 type="number"
-                id={`item-rate-${index}`}
                 placeholder="0"
                 required
                 value={item.rate}
                 onChange={(e) => handleInputChange(index, 'rate', e.target.value)}
-                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40 no-spinners"
+                inputClassName="no-spinners"
               />
-            </div>
-            <div className="flex flex-col items-left gap-2 mt-3">
-              <label htmlFor={`item-hsn-${index}`} className="text-sm font-bold text-white w-20">HSN Code :</label>
-              <input
+              <TextField
+                label="HSN Code"
                 type="number"
-                id={`item-hsn-${index}`}
                 placeholder="0"
-                required
                 value={item.hsn}
                 onChange={(e) => handleInputChange(index, 'hsn', e.target.value)}
-                className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-40 no-spinners"
+                inputClassName="no-spinners"
               />
             </div>
-          </div>
-          <div className="flex flex-col mt-4">
-            <p className="text-sm font-bold text-white">Total</p>
-            <p className="text-lg my-2 font-bold text-white">{item.total.toFixed(2)} {invoiceData.currency}</p>
 
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor={`item-description-${index}`}>Description:</label>
-            <textarea
-              id={`item-description-${index}`}
-              rows="4"
-              cols="50"
-              placeholder="Item Description"
-              className="bg-[#020817] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-80"
-            ></textarea>
-          </div>
-        </div>
-      ))}
-      <button
-        className="flex flex-row items-center justify-center py-2 text-sm font-bold font-lexend mt-4 rounded-lg bg-white text-black w-[50%]"
-        onClick={addItem}
-      >
-        <FaPlus className="mx-2 text-sm" />
-        Add a new item
-      </button>
-      <div className="flex flex-row w-auto justify-end ">
-        <button
-          type="button"
-          onClick={() => navigate("/invoice-details")}
-          className="bg-white hover:bg-zinc-200 mt-12 w-36 flex justify-around items-center text-[#020817] font-bold py-2 px-4 rounded"
-        >
-          <GrFormPreviousLink className="text-2xl" /> Back
-        </button>
-        <button
-          type="button"
-          onClick={() => navigate("/paymentInfo")}
-          className="bg-white hover:bg-zinc-200 mt-12 w-36 mx-4 flex justify-around items-center text-[#020817] font-bold py-2 px-4 rounded"
-        >
-          Next <GrFormNextLink className="text-2xl" />
-        </button>
+            <TextAreaField
+              label="Description"
+              className="mt-3"
+              rows="2"
+              placeholder="Item description (optional)"
+              value={item.description || ''}
+              onChange={(e) => handleInputChange(index, 'description', e.target.value)}
+            />
+
+            <div className="flex justify-end mt-3">
+              <div className="rounded-lg bg-gray-50 px-4 py-2 text-right">
+                <p className="text-xs font-medium text-gray-400">Total</p>
+                <p className="text-base font-bold text-gray-900">
+                  {Number(item.total || 0).toFixed(2)} {invoiceData.currency}
+                </p>
+              </div>
+            </div>
+          </Card>
+        ))}
       </div>
+
+      <Button variant="secondary" icon={LuPlus} iconPosition="left" onClick={addItem} className="mt-4 self-start">
+        Add a new item
+      </Button>
+
+      <StepFooter onBack={() => navigate("/invoice-details")} onNext={() => navigate("/paymentInfo")} />
     </div>
   );
 };

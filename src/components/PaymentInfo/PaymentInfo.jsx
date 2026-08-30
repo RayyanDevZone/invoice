@@ -1,7 +1,11 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
-import { InvoiceContext } from "../../InvoiceContext"; // Import the context
+import { InvoiceContext } from "../../InvoiceContext";
+import Card from "../ui/Card";
+import StepHeader from "../ui/StepHeader";
+import StepFooter from "../ui/StepFooter";
+import { TextField } from "../ui/Field";
+import ImageUpload from "../ui/ImageUpload";
 
 const PaymentInfo = () => {
   const navigate = useNavigate();
@@ -18,117 +22,75 @@ const PaymentInfo = () => {
     });
   };
 
-  const handleQrUpload = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64String = reader.result;
-      setQrCode(base64String);
+  const handleQrChange = (base64String) => {
+    setQrCode(base64String || '');
+    if (base64String) {
       localStorage.setItem('qrCode', base64String);
-    };
-    if (file) {
-      reader.readAsDataURL(file);
+    } else {
+      localStorage.removeItem('qrCode');
     }
   };
 
   return (
-    <div className="h-screen w-full rounded-t-xl box-border py-5 px-4 text-white flex flex-col bg-[#020817] items-left font-lexend">
-      <h1 className="text-white text-2xl font-semibold">Payment Information:</h1>
-      <div className="flex flex-col w-[70%] items-start justify-around">
-        <div className="flex flex-row w-[400px] sm:w-[450px] justify-between items-center gap-2 mt-3">
-          <label htmlFor="bank-name" className="text-sm font-bold text-white w-28">Bank Name:</label>
-          <input
-            type="text"
-            id="bank-name"
+    <div className="w-full max-w-5xl">
+      <StepHeader
+        eyebrow="Step 4 of 6"
+        title="Payment Information"
+        description="Optional — share your bank details so clients know how to pay you."
+      />
+      <Card className="box-border py-6 px-6 sm:px-8 flex flex-col sm:flex-row gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 flex-1">
+          <TextField
+            label="Bank Name"
             name="bankName"
             placeholder="Bank name"
-            required
             value={invoiceData.paymentInfo?.bankName || ''}
             onChange={handleInputChange}
-            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 sm:w-64"
           />
-        </div>
-        <div className="flex flex-row w-[400px] sm:w-[450px] justify-center items-center gap-2 mt-3">
-          <label htmlFor="account-name" className="text-sm font-bold text-white w-48">Account Holder Name:</label>
-          <input
-            type="text"
-            id="account-name"
+          <TextField
+            label="Account Holder Name"
             name="accountName"
             placeholder="Account name"
-            required
             value={invoiceData.paymentInfo?.accountName || ''}
             onChange={handleInputChange}
-            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 sm:w-64"
           />
-        </div>
-        <div className="flex flex-row w-[400px] sm:w-[450px] justify-between items-center gap-2 mt-3">
-          <label htmlFor="accountNumber" className="text-sm font-bold text-white w-36">Account Number:</label>
-          <input
+          <TextField
+            label="Account Number"
             type="number"
-            id="accountNumber"
             name="accountNumber"
-            placeholder="Account Number"
-            required
+            placeholder="Account number"
             value={invoiceData.paymentInfo?.accountNumber || ''}
             onChange={handleInputChange}
-            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 sm:w-64 no-spinners"
+            inputClassName="no-spinners"
           />
-        </div>
-        <div className="flex flex-row w-[400px] sm:w-[450px] justify-between items-center gap-2 mt-3">
-          <label htmlFor="ifsc-code" className="text-sm font-bold text-white w-28">IFSC Code:</label>
-          <input
-            type="text"
-            id="ifsc-code"
+          <TextField
+            label="IFSC Code"
             name="ifscCode"
-            placeholder="IFSC Code"
-            required
+            placeholder="IFSC code"
             value={invoiceData.paymentInfo?.ifscCode || ''}
             onChange={handleInputChange}
-            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 sm:w-64"
           />
-        </div>
-        <div className="flex flex-row w-[400px] sm:w-[450px] justify-between items-center gap-2 mt-3">
-          <label htmlFor="bank-address" className="text-sm font-bold text-white w-48">Bank Address:</label>
-          <input
-            type="text"
-            id="bank-address"
+          <TextField
+            label="Bank Address"
             name="bankAddress"
-            placeholder="Bank Address"
-            required
+            placeholder="Bank address"
+            className="sm:col-span-2"
             value={invoiceData.paymentInfo?.bankAddress || ''}
             onChange={handleInputChange}
-            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 sm:w-64"
           />
         </div>
-        <div className="flex flex-row w-[400px] sm:w-[450px] justify-between items-center gap-2 mt-3">
-          <label htmlFor="qrCode" className="text-sm font-bold text-white w-48">QR Code:</label>
-          <input
-            type="file"
-            id="qrCode"
-            name="qrCode"
-            accept="image/*"
-            onChange={handleQrUpload}
-            className="bg-[#020817] border border-[#1E293B] rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-64"
-          />
-        </div>
-      </div>
-      <div className="flex flex-row w-auto justify-end">
-        <button
-          type="button"
-          onClick={() => navigate("/itemsLine")}
-          className="bg-white hover:bg-zinc-200 mt-12 w-36 flex justify-around items-center text-[#020817] font-bold py-2 px-4 rounded"
-        >
-          <GrFormPreviousLink className="text-2xl" /> Back
-        </button>
-        {" "}
-        <button
-          type="button"
-          onClick={() => navigate("/summary")}
-          className="bg-white hover:bg-zinc-200 mt-12 w-36 mx-4 flex justify-around items-center text-[#020817] font-bold py-2 px-4 rounded"
-        >
-          Next <GrFormNextLink className="text-2xl" />
-        </button>
-      </div>
+
+        <ImageUpload
+          label="UPI / QR Code"
+          hint="Any image"
+          value={qrCode}
+          onChange={handleQrChange}
+          height="h-40"
+          width="w-full"
+          className="sm:w-48 w-full shrink-0"
+        />
+      </Card>
+      <StepFooter onBack={() => navigate("/itemsLine")} onNext={() => navigate("/summary")} />
     </div>
   );
 };

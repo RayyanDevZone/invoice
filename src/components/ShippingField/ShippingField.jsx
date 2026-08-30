@@ -1,14 +1,17 @@
-    // components/ShippingField.jsx
 import React from 'react';
+import { TextField } from "../ui/Field";
 
-const ShippingField = () => {
-  return (
-    <div className="field my-4">
-      <label>Shipping:</label>
-      <input type="number" name="shipping" placeholder="Enter shipping cost"
-       className="bg-[#020817] border border-[#1E293B] mx-2 rounded p-2 text-white text-sm font-semibold focus:outline-none focus:border-blue-500 w-48  placeholder:font-montserrat  no-spinners" />
-    </div>
-  );
-};
+const ShippingField = ({ value, onChange }) => (
+  <TextField
+    label="Shipping"
+    type="number"
+    name="shipping"
+    placeholder="0"
+    value={value}
+    onChange={(e) => onChange(Number(e.target.value))}
+    className="w-full sm:w-48"
+    inputClassName="no-spinners"
+  />
+);
 
 export default ShippingField;
