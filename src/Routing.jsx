@@ -9,7 +9,11 @@ import Summary from "./components/Summary/Summary";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Navbar from "./components/Navbar/Navbar";
 import InvoiceContainer from "./components/InvoiceContainer/InvoiceContainer";
-import SelfLogo from './components/SelfLogo/SelfLogo';
+import Profile from './components/Profile/Profile';
+import Login from './components/Login/Login';
+import Customers from './components/Customers/Customers';
+import Items from './components/Items/Items';
+import ProtectedRoute from './ProtectedRoute';
 
 const StepLayout = ({ children }) => (
   <div className="flex flex-1 w-full">
@@ -27,6 +31,10 @@ const Routing = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<WelcomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/customers" element={<ProtectedRoute><Customers /></ProtectedRoute>} />
+          <Route path="/items" element={<ProtectedRoute><Items /></ProtectedRoute>} />
           <Route path="/personal-info" element={<StepLayout><PersonalInfo /></StepLayout>} />
           <Route path="/invoice-details" element={<StepLayout><InvoiceDetails /></StepLayout>} />
           <Route path="/itemsLine" element={<StepLayout><ItemsLine /></StepLayout>} />
@@ -34,7 +42,6 @@ const Routing = () => {
           <Route path="/summary" element={<StepLayout><Summary /></StepLayout>} />
           <Route path="/invoice" element={<StepLayout><InvoiceContainer /></StepLayout>} />
         </Routes>
-        <SelfLogo />
       </div>
     </Router>
   );

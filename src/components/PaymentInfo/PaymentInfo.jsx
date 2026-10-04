@@ -1,94 +1,99 @@
-import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { InvoiceContext } from "../../InvoiceContext";
+import { AuthContext } from "../../AuthContext";
 import Card from "../ui/Card";
 import StepHeader from "../ui/StepHeader";
 import StepFooter from "../ui/StepFooter";
-import { TextField } from "../ui/Field";
-import ImageUpload from "../ui/ImageUpload";
 
+const fields = [
+  { name: "bankName", label: "Bank Name" },
+  { name: "accountName", label: "Account Holder Name" },
+  { name: "accountNumber", label: "Account Number" },
+  { name: "ifscCode", label: "IFSC Code" },
+  { name: "bankAddress", label: "Bank Address", wide: true },
+];
+
+// Shows the payment details of the business the invoice is billed from.
+// They're edited per business in the profile.
 const PaymentInfo = () => {
   const navigate = useNavigate();
-  const { invoiceData, setInvoiceData } = useContext(InvoiceContext);
-  const [qrCode, setQrCode] = useState(localStorage.getItem('qrCode') || '');
+  const { invoiceData, businesses, selectedBusinessId } = useContext(InvoiceContext);
+  const { user } = useContext(AuthContext);
+  const payment = invoiceData.paymentInfo || {};
+  const business = businesses.find((b) => b.id === selectedBusinessId);
+  const hasDetails = fields.some(({ name }) => payment[name]) || payment.qrCode;
 
-  const handleInputChange = (e) => {
-    setInvoiceData({
-      ...invoiceData,
-      paymentInfo: {
-        ...invoiceData.paymentInfo,
-        [e.target.name]: e.target.value
-      }
-    });
-  };
-
-  const handleQrChange = (base64String) => {
-    setQrCode(base64String || '');
-    if (base64String) {
-      localStorage.setItem('qrCode', base64String);
-    } else {
-      localStorage.removeItem('qrCode');
-    }
-  };
+  let emptyMessage = null;
+  if (!user) {
+    emptyMessage = (
+      <>
+        Bank details are saved with your business.{" "}
+        <Link to="/login" className="font-semibold text-gray-900 hover:underline">Sign in</Link> to add them.
+      </>
+    );
+  } else if (!business) {
+    emptyMessage = (
+      <>
+        Add a business in your{" "}
+        <Link to="/profile" className="font-semibold text-gray-900 hover:underline">profile</Link> to show its bank details here.
+      </>
+    );
+  } else if (!hasDetails) {
+    emptyMessage = (
+      <>
+        {business.businessName || "This business"} has no bank details yet.{" "}
+        <Link to="/profile" className="font-semibold text-gray-900 hover:underline">Add them in your profile</Link>.
+      </>
+    );
+  }
 
   return (
     <div className="w-full max-w-5xl">
       <StepHeader
         eyebrow="Step 4 of 6"
         title="Payment Information"
-        description="Optional — share your bank details so clients know how to pay you."
+        description="The bank details shown on this invoice, from the business you're billing from."
       />
-      <Card className="box-border py-6 px-6 sm:px-8 flex flex-col sm:flex-row gap-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 flex-1">
-          <TextField
-            label="Bank Name"
-            name="bankName"
-            placeholder="Bank name"
-            value={invoiceData.paymentInfo?.bankName || ''}
-            onChange={handleInputChange}
-          />
-          <TextField
-            label="Account Holder Name"
-            name="accountName"
-            placeholder="Account name"
-            value={invoiceData.paymentInfo?.accountName || ''}
-            onChange={handleInputChange}
-          />
-          <TextField
-            label="Account Number"
-            type="number"
-            name="accountNumber"
-            placeholder="Account number"
-            value={invoiceData.paymentInfo?.accountNumber || ''}
-            onChange={handleInputChange}
-            inputClassName="no-spinners"
-          />
-          <TextField
-            label="IFSC Code"
-            name="ifscCode"
-            placeholder="IFSC code"
-            value={invoiceData.paymentInfo?.ifscCode || ''}
-            onChange={handleInputChange}
-          />
-          <TextField
-            label="Bank Address"
-            name="bankAddress"
-            placeholder="Bank address"
-            className="sm:col-span-2"
-            value={invoiceData.paymentInfo?.bankAddress || ''}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <ImageUpload
-          label="UPI / QR Code"
-          hint="Any image"
-          value={qrCode}
-          onChange={handleQrChange}
-          height="h-40"
-          width="w-full"
-          className="sm:w-48 w-full shrink-0"
-        />
+      <Card className="box-border py-6 px-6 sm:px-8">
+        {emptyMessage ? (
+          <p className="text-sm text-gray-500">{emptyMessage}</p>
+        ) : (
+          <>
+            <div className="flex items-center justify-between gap-3 mb-5">
+              <p className="text-sm text-gray-500">
+                From <span className="font-semibold text-gray-900">{business.businessName || business.name}</span>
+              </p>
+              <Link to="/profile" className="text-sm font-semibold text-gray-600 hover:text-gray-900 hover:underline">
+                Edit in profile
+              </Link>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5 flex-1">
+                {fields.map(({ name, label, wide }) => (
+                  <div key={name} className={`flex flex-col gap-1 min-w-0 ${wide ? "sm:col-span-2" : ""}`}>
+                    <p className="text-sm font-medium text-gray-500">{label}</p>
+                    <p className={`text-sm font-semibold break-words ${payment[name] ? "text-gray-900" : "text-gray-300"}`}>
+                      {payment[name] || "—"}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <div className="flex flex-col gap-1 sm:w-48 shrink-0">
+                <p className="text-sm font-medium text-gray-500">UPI / QR Code</p>
+                {payment.qrCode ? (
+                  <img
+                    src={payment.qrCode}
+                    alt="UPI QR code"
+                    className="h-40 w-40 object-contain rounded-lg border border-gray-200 bg-white p-1"
+                  />
+                ) : (
+                  <p className="text-sm font-semibold text-gray-300">—</p>
+                )}
+              </div>
+            </div>
+          </>
+        )}
       </Card>
       <StepFooter onBack={() => navigate("/itemsLine")} onNext={() => navigate("/summary")} />
     </div>

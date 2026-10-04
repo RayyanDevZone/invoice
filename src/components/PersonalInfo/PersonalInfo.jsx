@@ -1,91 +1,207 @@
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { LuBuilding2, LuUser } from "react-icons/lu";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { LuBuilding2, LuPlus, LuUser, LuUserPlus } from "react-icons/lu";
 import { InvoiceContext } from "../../InvoiceContext";
+import { AuthContext } from "../../AuthContext";
+import Select from "../ui/Select";
 import Card from "../ui/Card";
 import StepHeader from "../ui/StepHeader";
 import StepFooter from "../ui/StepFooter";
-import { TextField } from "../ui/Field";
-
-const fieldConfig = [
-  { name: "name", label: "Name" },
-  { name: "address", label: "Address" },
-  { name: "city", label: "City" },
-  { name: "zip", label: "ZIP / Postal code" },
-  { name: "country", label: "Country" },
-  { name: "email", label: "Email", type: "email" },
-  { name: "phone", label: "Phone", type: "tel" },
-  { name: "gstReg", label: "GST Reg." },
-];
-
-const PartyForm = ({ title, icon: Icon, section, data, onChange, placeholderPrefix }) => (
-  <div className="w-full h-full box-border py-5 px-6">
-    <div className="flex items-center gap-2 mb-4">
-      <span className="h-8 w-8 rounded-full bg-brand/30 flex items-center justify-center shrink-0">
-        <Icon className="text-brand-dark text-base" />
-      </span>
-      <h3 className="text-gray-900 font-bold text-lg">{title}</h3>
-    </div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-4">
-      {fieldConfig.map(({ name, label, type }) => (
-        <TextField
-          key={name}
-          label={label}
-          type={type || "text"}
-          name={name}
-          placeholder={`${placeholderPrefix} ${label.toLowerCase()}`}
-          value={data[name] || ""}
-          onChange={(e) => onChange(section, e)}
-        />
-      ))}
-    </div>
-  </div>
-);
+import Button from "../ui/Button";
+import PartyForm, { statesFor, useCountries } from "../ui/PartyForm";
+import { validateParty } from "../../utils/validation";
+import PartyCard from "../ui/PartyCard";
+import { customerApi } from "../../utils/customers";
 
 const PersonalInfo = () => {
-  const { invoiceData, setInvoiceData } = useContext(InvoiceContext);
+  const {
+    invoiceData,
+    setInvoiceData,
+    businesses,
+    selectedBusinessId,
+    setSelectedBusinessId,
+    customers,
+    setCustomers,
+    selectedCustomerId,
+    setSelectedCustomerId,
+  } = useContext(InvoiceContext);
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const countries = useCountries();
+  const [addingCustomer, setAddingCustomer] = useState(false);
+  const [touched, setTouched] = useState({});
+  const [submitted, setSubmitted] = useState(false);
 
-  const handleInputChange = (section, e) => {
-    setInvoiceData({
-      ...invoiceData,
+  // Signed-out users type the receiver straight into the form (nothing is saved).
+  // Errors show once a field has been left, or after pressing Next.
+  const receiver = invoiceData.receiver;
+  const allErrors = validateParty(receiver, {
+    stateRequired: Boolean(statesFor(countries, receiver.country)),
+  });
+  const visibleErrors = Object.fromEntries(
+    Object.entries(allErrors).filter(([field]) => submitted || touched[field])
+  );
+  const errorCount = Object.keys(visibleErrors).length;
+
+  const handleBlur = (field) => setTouched((prev) => ({ ...prev, [field]: true }));
+
+  const handleInputChange = (section, field, value) => {
+    setInvoiceData((prev) => ({
+      ...prev,
       [section]: {
-        ...invoiceData[section],
-        [e.target.name]: e.target.value,
+        ...prev[section],
+        [field]: value,
       },
-    });
+    }));
   };
+
+  // Signed-in users pick a saved customer, which becomes the invoice's receiver.
+  const selectedCustomer = customers.find((c) => c.id === selectedCustomerId) || null;
+
+  const handleCustomerSaved = (customer) => {
+    setCustomers((prev) => [...prev, customer]);
+    setSelectedCustomerId(customer.id);
+    setAddingCustomer(false);
+  };
+
+  let nextError = "";
+  if (submitted && user) {
+    if (addingCustomer) nextError = "Save or cancel the new customer to continue";
+    else if (!selectedCustomer) nextError = "Select a customer or add a new one to continue";
+  } else if (submitted && errorCount > 0) {
+    nextError = `Please fix ${errorCount === 1 ? "the highlighted field" : `the ${errorCount} highlighted fields`} to continue`;
+  }
+
+  const handleNext = () => {
+    setSubmitted(true);
+    const ready = user ? selectedCustomer && !addingCustomer : Object.keys(allErrors).length === 0;
+    if (ready) navigate("/invoice-details");
+  };
+
+  const customerSummary = (c) =>
+    [c.name, [c.city, c.state].filter(Boolean).join(", "), c.email].filter(Boolean).join(" · ");
 
   return (
     <div className="w-full max-w-5xl">
       <StepHeader
         eyebrow="Step 1 of 6"
-        title="From & To"
-        description="Tell us who is sending and who is receiving this invoice."
+        title="Bill To"
+        description="Choose the business you're billing from, and the customer receiving this invoice."
       />
-      <Card className="flex flex-col sm:flex-row overflow-hidden">
-        <div className="sm:w-1/2 w-full border-b sm:border-b-0 sm:border-r border-gray-200">
-          <PartyForm
-            title="Bill From"
-            icon={LuBuilding2}
-            section="sender"
-            data={invoiceData.sender}
-            onChange={handleInputChange}
-            placeholderPrefix="Your"
-          />
+      <Card className="mb-6 py-5 px-6">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="h-8 w-8 rounded-full bg-brand/30 flex items-center justify-center shrink-0">
+            <LuBuilding2 className="text-brand-dark text-base" />
+          </span>
+          <h3 className="text-gray-900 font-bold text-lg">Bill From</h3>
         </div>
-        <div className="sm:w-1/2 w-full">
+        {businesses.length > 0 ? (
+          <div className="flex flex-col sm:flex-row sm:items-end gap-3">
+            <Select
+              label="Business"
+              className="w-full sm:max-w-sm"
+              value={selectedBusinessId}
+              onChange={setSelectedBusinessId}
+              searchable={businesses.length > 6}
+              options={businesses.map((b) => ({ value: b.id, label: b.businessName || b.name || "Unnamed business" }))}
+            />
+            <Link to="/profile" className="text-sm font-semibold text-gray-600 hover:text-gray-900 hover:underline sm:pb-3">
+              Manage businesses
+            </Link>
+          </div>
+        ) : (
+          <p className="text-sm text-gray-500">
+            {user ? "You haven't added a business yet. " : "Sign in to add the business you bill from. "}
+            <Link to="/profile" className="font-semibold text-gray-900 hover:underline">
+              {user ? "Add one in your profile" : "Sign in"}
+            </Link>
+          </p>
+        )}
+      </Card>
+      {user ? (
+        <>
+          <Card className="py-5 px-6">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="h-8 w-8 rounded-full bg-brand/30 flex items-center justify-center shrink-0">
+                <LuUser className="text-brand-dark text-base" />
+              </span>
+              <h3 className="text-gray-900 font-bold text-lg">Bill To</h3>
+            </div>
+            {customers.length > 0 ? (
+              <div className="flex flex-col gap-2">
+                <Select
+                  label="Customer"
+                  className="w-full sm:max-w-sm"
+                  value={selectedCustomerId}
+                  placeholder="Select a customer"
+                  onChange={setSelectedCustomerId}
+                  searchable={customers.length > 6}
+                  options={customers.map((c) => ({ value: c.id, label: c.businessName || c.name || "Unnamed customer" }))}
+                />
+                {selectedCustomer && (
+                  <p className="text-sm text-gray-500">{customerSummary(selectedCustomer)}</p>
+                )}
+              </div>
+            ) : (
+              <p className="text-sm text-gray-500">You haven't saved any customers yet.</p>
+            )}
+            <div className="flex flex-wrap items-center gap-4 mt-4">
+              {!addingCustomer && (
+                <Button
+                  type="button"
+                  variant="secondary"
+                  icon={LuPlus}
+                  iconPosition="left"
+                  onClick={() => setAddingCustomer(true)}
+                >
+                  Add New Customer
+                </Button>
+              )}
+              {customers.length > 0 && (
+                <Link to="/customers" className="text-sm font-semibold text-gray-600 hover:text-gray-900 hover:underline">
+                  Manage customers
+                </Link>
+              )}
+            </div>
+          </Card>
+          {addingCustomer && (
+            <div className="mt-6">
+              <PartyCard
+                party={{}}
+                api={customerApi}
+                noun="customer"
+                icon={LuUserPlus}
+                placeholderPrefix="Customer"
+                countries={countries}
+                onSaved={handleCustomerSaved}
+                onCancel={() => setAddingCustomer(false)}
+              />
+            </div>
+          )}
+        </>
+      ) : (
+        <Card>
           <PartyForm
             title="Bill To"
             icon={LuUser}
             section="receiver"
-            data={invoiceData.receiver}
+            data={receiver}
             onChange={handleInputChange}
             placeholderPrefix="Receiver"
+            errors={visibleErrors}
+            onBlur={handleBlur}
+            countries={countries}
+            withBusinessName
+            action={
+              <Link to="/login" className="text-sm font-semibold text-gray-600 hover:text-gray-900 hover:underline shrink-0">
+                Sign in to save customers
+              </Link>
+            }
           />
-        </div>
-      </Card>
-      <StepFooter onNext={() => navigate("/invoice-details")} />
+        </Card>
+      )}
+      {nextError && <p className="text-sm font-medium text-red-600 text-right mt-4">{nextError}</p>}
+      <StepFooter onNext={handleNext} />
     </div>
   );
 };
