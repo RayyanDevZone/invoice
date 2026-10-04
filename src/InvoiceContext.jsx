@@ -1,12 +1,21 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
 // Create the context
 export const InvoiceContext = createContext();
 
+// Sender details are the user's profile, so keep them across reloads
+const loadSavedSender = () => {
+  try {
+    return JSON.parse(localStorage.getItem('sender'));
+  } catch {
+    return null;
+  }
+};
+
 // Create the provider component
 export const InvoiceProvider = ({ children }) => {
   const [invoiceData, setInvoiceData] = useState({
-    sender: {
+    sender: loadSavedSender() || {
       name: '',
       address: '',
       city: '',
@@ -33,6 +42,10 @@ export const InvoiceProvider = ({ children }) => {
     shipping: 0,
     signatory: false, // Add the signatory toggle directly to invoiceData
   });
+
+  useEffect(() => {
+    localStorage.setItem('sender', JSON.stringify(invoiceData.sender));
+  }, [invoiceData.sender]);
 
   // Function to update the signatory toggle
   const toggleSignatory = () => {

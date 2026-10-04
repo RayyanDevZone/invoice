@@ -4,7 +4,7 @@ import { LuUsers, LuFileText, LuList, LuWallet, LuClipboardList, LuReceipt, LuCh
 import { InvoiceContext } from '../../InvoiceContext';
 
 const links = [
-  { id: 1, name: "From & To", route: "personal-info", icon: LuUsers },
+  { id: 1, name: "Bill To", route: "personal-info", icon: LuUsers },
   { id: 2, name: "Invoice Details", route: "invoice-details", icon: LuFileText },
   { id: 3, name: "Items Details", route: "itemsLine", icon: LuList },
   { id: 4, name: "Payment Info", route: "paymentInfo", icon: LuWallet },
@@ -20,7 +20,7 @@ const Sidebar = () => {
   const isStepComplete = (id) => {
     switch (id) {
       case 1:
-        return Boolean(invoiceData.sender?.name && invoiceData.receiver?.name);
+        return Boolean(invoiceData.receiver?.name);
       case 2:
         return Boolean(invoiceData.invoiceNumber && invoiceData.issueDate && invoiceData.dueDate);
       case 3:
