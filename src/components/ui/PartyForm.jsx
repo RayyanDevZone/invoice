@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { TextField } from "./Field";
 import Select from "./Select";
 import { loadCountries } from "../../utils/locations";
+import { enterToNext } from "../../utils/enterToNext";
 
 // Only the "Bill From" business has a business name; the contact person's
 // name is then labelled as such.
@@ -147,21 +148,6 @@ const PartyForm = ({
     return textField;
   };
 
-  // Enter moves to the next field when it's empty, otherwise just leaves this one.
-  const handleKeyDown = (e) => {
-    const field = e.target.dataset?.field;
-    if (e.key !== "Enter" || e.target.tagName !== "INPUT" || !field) return;
-    e.preventDefault();
-
-    const controls = Array.from(e.currentTarget.querySelectorAll("[data-field]"));
-    const next = controls[controls.indexOf(e.target) + 1];
-    if (next && !next.disabled && !data[next.dataset.field]) {
-      next.focus();
-    } else {
-      e.target.blur();
-    }
-  };
-
   const renderValue = ({ name, label }) => (
     <div key={name} className="flex flex-col gap-1 min-w-0">
       <p className="text-sm font-medium text-gray-500">{label}</p>
@@ -184,7 +170,7 @@ const PartyForm = ({
       </div>
       <div
         className={`grid grid-cols-1 sm:grid-cols-2 ${readOnly ? "gap-x-4 gap-y-5" : "gap-x-4 gap-y-4"}`}
-        onKeyDown={readOnly ? undefined : handleKeyDown}
+        onKeyDown={readOnly ? undefined : enterToNext(data)}
       >
         {fields.map(readOnly ? renderValue : renderField)}
       </div>

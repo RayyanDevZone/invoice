@@ -9,6 +9,7 @@ const ConfirmDialog = ({
   confirmLabel = 'Confirm',
   cancelLabel = 'Cancel',
   icon: Icon,
+  tone = 'default',
   busy = false,
   onConfirm,
   onCancel,
@@ -42,8 +43,8 @@ const ConfirmDialog = ({
         className="w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-xl font-google-sans"
       >
         {Icon && (
-          <span className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center mb-4">
-            <Icon className="text-gray-700 text-lg" />
+          <span className={`h-10 w-10 rounded-full flex items-center justify-center mb-4 ${tone === 'danger' ? 'bg-red-50' : 'bg-gray-100'}`}>
+            <Icon className={`text-lg ${tone === 'danger' ? 'text-red-600' : 'text-gray-700'}`} />
           </span>
         )}
         <h2 id="confirm-dialog-title" className="text-lg font-bold text-gray-900">
@@ -56,7 +57,7 @@ const ConfirmDialog = ({
           <Button ref={cancelRef} type="button" variant="secondary" onClick={onCancel} disabled={busy}>
             {cancelLabel}
           </Button>
-          <Button type="button" onClick={onConfirm} disabled={busy}>
+          <Button type="button" variant={tone === 'danger' ? 'danger' : 'primary'} onClick={onConfirm} disabled={busy}>
             {confirmLabel}
           </Button>
         </div>

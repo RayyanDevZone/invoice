@@ -1,4 +1,4 @@
-// Validation rules for the "Bill From" profile. Each rule returns an error
+// Validation rules for a business on the invoice (Bill From or Bill To). Each rule returns an error
 // message, or nothing when the value is valid.
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -12,7 +12,7 @@ const GSTIN = /^\d{2}[A-Z]{5}\d{4}[A-Z][1-9A-Z]Z[0-9A-Z]$/;
 const required = (label) => (v) => (v ? undefined : `${label} is required`);
 const maxLength = (n) => (v) => (v.length > n ? `Must be ${n} characters or fewer` : undefined);
 
-const senderRules = {
+const partyRules = {
   businessName: [required('Business name'), maxLength(100)],
   name: [required('Contact name'), maxLength(100)],
   address: [required('Address'), maxLength(200)],
@@ -46,14 +46,44 @@ const senderRules = {
 };
 
 // `stateRequired` is true when the chosen country has a list of states to pick from.
-export const validateSender = (sender, { stateRequired = false } = {}) => {
+export const validateParty = (party, { stateRequired = false } = {}) => {
   const errors = {};
   const rules = {
-    ...senderRules,
-    state: stateRequired ? [required('State'), ...senderRules.state] : senderRules.state,
+    ...partyRules,
+    state: stateRequired ? [required('State'), ...partyRules.state] : partyRules.state,
   };
   Object.entries(rules).forEach(([field, rules]) => {
-    const value = (sender[field] || '').trim();
+    const value = (party[field] || '').trim();
+    for (const rule of rules) {
+      const message = rule(value);
+      if (message) {
+        errors[field] = message;
+        break;
+      }
+    }
+  });
+  return errors;
+};
+
+// Bank details are optional, but checked when filled in.
+const IFSC = /^[A-Z]{4}0[A-Z0-9]{6}$/;
+
+const bankRules = {
+  bankName: [maxLength(100)],
+  accountName: [maxLength(100)],
+  accountNumber: [
+    (v) => (!v || /^\d{9,18}$/.test(v) ? undefined : 'Account number must be 9 to 18 digits'),
+  ],
+  ifscCode: [
+    (v) => (!v || IFSC.test(v.toUpperCase()) ? undefined : 'Enter a valid 11-character IFSC, e.g. SBIN0001234'),
+  ],
+  bankAddress: [maxLength(200)],
+};
+
+export const validateBank = (bank) => {
+  const errors = {};
+  Object.entries(bankRules).forEach(([field, rules]) => {
+    const value = (bank[field] || '').trim();
     for (const rule of rules) {
       const message = rule(value);
       if (message) {

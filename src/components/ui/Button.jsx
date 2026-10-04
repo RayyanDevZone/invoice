@@ -5,6 +5,8 @@ const variants = {
     'bg-brand hover:bg-brand/85 text-gray-900 shadow-sm disabled:bg-gray-100 disabled:text-gray-400',
   secondary:
     'bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 disabled:text-gray-300',
+  danger:
+    'bg-red-600 hover:bg-red-700 text-white shadow-sm disabled:bg-red-300',
   ghost:
     'bg-transparent hover:bg-gray-100 text-gray-600 disabled:text-gray-300',
 };

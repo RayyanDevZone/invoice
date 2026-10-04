@@ -7,7 +7,8 @@ import StepHeader from "../ui/StepHeader";
 import Button from "../ui/Button";
 import { useCountries } from "../ui/PartyForm";
 import ConfirmDialog from "../ui/ConfirmDialog";
-import BusinessCard from "./BusinessCard";
+import PartyCard from "../ui/PartyCard";
+import { businessApi } from "../../utils/businesses";
 
 const Profile = () => {
   const { businesses, setBusinesses, businessesLoading } = useContext(InvoiceContext);
@@ -84,21 +85,25 @@ const Profile = () => {
         ) : (
           <div className="flex flex-col gap-6">
             {businesses.map((business) => (
-              <BusinessCard
+              <PartyCard
                 key={business.id}
-                business={business}
+                party={business}
+                api={businessApi}
+                withBank
                 countries={countries}
                 onSaved={(saved) => handleSaved(saved)}
                 onDeleted={handleDeleted}
               />
             ))}
             {newForms.map((key) => (
-              <BusinessCard
+              <PartyCard
                 key={`new-${key}`}
-                business={{}}
+                party={{}}
+                api={businessApi}
+                withBank
                 countries={countries}
                 onSaved={(saved) => handleSaved(saved, key)}
-                onCancelNew={() => removeNewForm(key)}
+                onCancel={() => removeNewForm(key)}
               />
             ))}
             <div className="flex justify-start">

@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import { emptyBusiness, fetchBusinesses } from './utils/businesses';
+import { emptyBank, emptyParty } from './utils/parties';
+import { fetchCustomers } from './utils/customers';
 
 // Create the context
 export const InvoiceContext = createContext();
@@ -8,16 +10,9 @@ export const InvoiceContext = createContext();
 // Create the provider component
 export const InvoiceProvider = ({ children }) => {
   const [invoiceData, setInvoiceData] = useState({
-    sender: emptyBusiness,
-    receiver: {
-      name: '',
-      address: '',
-      city: '',
-      state: '',
-      zip: '',
-      country: '',
-      gstReg: '' // Add GST Registration field
-    },
+    sender: emptyParty,
+    paymentInfo: emptyBank,
+    receiver: { ...emptyParty },
     items: [],
     additionalNotes: '',
     paymentTerms: '',
@@ -55,13 +50,44 @@ export const InvoiceProvider = ({ children }) => {
     };
   }, [userId]);
 
+  // Saved customers, for filling in "Bill To". selectedCustomerId is the saved
+  // customer the current invoice's receiver came from (null for a new one).
+  const [customers, setCustomers] = useState([]);
+  const [selectedCustomerId, setSelectedCustomerId] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    setCustomers([]);
+    setSelectedCustomerId(null);
+    if (!userId) return;
+
+    fetchCustomers()
+      .then((list) => !cancelled && setCustomers(list))
+      .catch((error) => console.error('Failed to load customers', error));
+
+    return () => {
+      cancelled = true;
+    };
+  }, [userId]);
+
+  // Keep the receiver in step with edits to the selected customer.
+  const selectedCustomer = customers.find((c) => c.id === selectedCustomerId) || null;
+
+  useEffect(() => {
+    if (!selectedCustomer) return;
+    const { id, ...receiver } = selectedCustomer;
+    setInvoiceData((prev) => ({ ...prev, receiver: { ...emptyParty, ...receiver } }));
+  }, [selectedCustomer]);
+
   // Default to the first business, and keep the sender in step with edits.
   const selectedBusiness =
     businesses.find((b) => b.id === selectedBusinessId) || businesses[0] || null;
 
+  // The selected business supplies both "Bill From" and the payment details.
   useEffect(() => {
-    const { id, ...sender } = selectedBusiness || { ...emptyBusiness };
-    setInvoiceData((prev) => ({ ...prev, sender }));
+    const business = selectedBusiness || emptyBusiness;
+    const pick = (fields) => Object.fromEntries(Object.keys(fields).map((f) => [f, business[f] || '']));
+    setInvoiceData((prev) => ({ ...prev, sender: pick(emptyParty), paymentInfo: pick(emptyBank) }));
   }, [selectedBusiness]);
 
   // Function to update the signatory toggle
@@ -83,6 +109,10 @@ export const InvoiceProvider = ({ children }) => {
         businessesLoading,
         selectedBusinessId: selectedBusiness?.id ?? null,
         setSelectedBusinessId,
+        customers,
+        setCustomers,
+        selectedCustomerId,
+        setSelectedCustomerId,
       }}
     >
       {children}

@@ -8,7 +8,7 @@ const formatLocality = ({ city, state, zip }) =>
 
 const Invoice = () => {
   const { invoiceData } = useContext(InvoiceContext);
-  const qrCode = localStorage.getItem('qrCode') || '';
+  const qrCode = invoiceData.paymentInfo?.qrCode || '';
   const logo = localStorage.getItem('logo') || ''; // Fetch logo from local storage
 
   const formatDate = (date) => {
@@ -84,8 +84,11 @@ const Invoice = () => {
       <div className="RecieverAddressDate w-full h-[200px] flex flex-row items-start justify-between px-6">
         <div className="BillTo w-[50%] h-full">
           <h1 className="text-lg font-bold text-gray-500 tracking-wide uppercase">Bill to</h1>
-          <p className="text-xl font-bold text-gray-800 mt-1">{invoiceData.receiver.name}</p>
-          {invoiceData.receiver.gstReg && <p className="text-sm font-semibold text-gray-500">GSTIN: {invoiceData.receiver.gstReg}</p>}
+          <p className="text-xl font-bold text-gray-800 mt-1">{invoiceData.receiver.businessName || invoiceData.receiver.name}</p>
+          {invoiceData.receiver.businessName && invoiceData.receiver.name && (
+            <p className="text-sm font-semibold text-gray-600">Attn: {invoiceData.receiver.name}</p>
+          )}
+          {invoiceData.receiver.gstReg && <p className="text-sm font-semibold text-gray-500">GSTIN: {invoiceData.receiver.gstReg.toUpperCase()}</p>}
           <p className="text-gray-600 font-semibold mt-1">{invoiceData.receiver.address}</p>
           <p className="text-gray-600 font-semibold">{formatLocality(invoiceData.receiver)}</p>
           <p className="text-gray-600 font-semibold">{invoiceData.receiver.country}</p>
