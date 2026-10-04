@@ -124,7 +124,7 @@ const PartyCard = ({
   );
 
   return (
-    <Card className="overflow-hidden">
+    <Card>
       <PartyForm
         title={(editing ? draft.businessName : party.businessName || party.name) || `New ${noun}`}
         icon={icon}

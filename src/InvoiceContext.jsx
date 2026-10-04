@@ -87,7 +87,13 @@ export const InvoiceProvider = ({ children }) => {
   useEffect(() => {
     const business = selectedBusiness || emptyBusiness;
     const pick = (fields) => Object.fromEntries(Object.keys(fields).map((f) => [f, business[f] || '']));
-    setInvoiceData((prev) => ({ ...prev, sender: pick(emptyParty), paymentInfo: pick(emptyBank) }));
+    setInvoiceData((prev) => ({
+      ...prev,
+      sender: pick(emptyParty),
+      paymentInfo: pick(emptyBank),
+      // Drop lines picked from a different business's saved items.
+      items: prev.items.filter((line) => !line.businessId || line.businessId === business.id),
+    }));
   }, [selectedBusiness]);
 
   // Function to update the signatory toggle

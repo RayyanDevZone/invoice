@@ -94,3 +94,32 @@ export const validateBank = (bank) => {
   });
   return errors;
 };
+
+// A saved item: name, HSN / SAC code, rate and unit.
+const HSN = /^\d{4}(\d{2}){0,2}$/;
+
+const itemRules = {
+  name: [required('Item name'), maxLength(100)],
+  hsn: [(v) => (!v || HSN.test(v) ? undefined : 'HSN / SAC must be 4, 6 or 8 digits')],
+  rate: [
+    required('Rate'),
+    (v) => (/^\d+(\.\d{1,2})?$/.test(v) ? undefined : 'Enter a valid amount, up to 2 decimal places'),
+    (v) => (Number(v) <= 9999999999 ? undefined : 'Rate is too large'),
+  ],
+  unit: [required('Unit')],
+};
+
+export const validateItem = (item) => {
+  const errors = {};
+  Object.entries(itemRules).forEach(([field, rules]) => {
+    const value = String(item[field] ?? '').trim();
+    for (const rule of rules) {
+      const message = rule(value);
+      if (message) {
+        errors[field] = message;
+        break;
+      }
+    }
+  });
+  return errors;
+};

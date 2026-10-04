@@ -98,3 +98,50 @@ create policy "Users can delete their own customers"
   on public.customers for delete
   to authenticated
   using ((select auth.uid()) = user_id);
+
+-- Saved items (products / services). Each business has its own item list.
+create table if not exists public.items (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  business_id uuid not null references public.businesses (id) on delete cascade,
+  name text not null,
+  hsn text, -- HSN / SAC code
+  rate numeric(12, 2) not null default 0,
+  unit text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create index if not exists items_user_id_idx on public.items (user_id);
+create index if not exists items_business_id_idx on public.items (business_id);
+
+-- Row Level Security: each user can only see and change their own items, and
+-- only attach them to a business they own.
+alter table public.items enable row level security;
+
+create policy "Users can view their own items"
+  on public.items for select
+  to authenticated
+  using ((select auth.uid()) = user_id);
+
+create policy "Users can add their own items"
+  on public.items for insert
+  to authenticated
+  with check (
+    (select auth.uid()) = user_id
+    and exists (select 1 from public.businesses b where b.id = business_id and b.user_id = (select auth.uid()))
+  );
+
+create policy "Users can update their own items"
+  on public.items for update
+  to authenticated
+  using ((select auth.uid()) = user_id)
+  with check (
+    (select auth.uid()) = user_id
+    and exists (select 1 from public.businesses b where b.id = business_id and b.user_id = (select auth.uid()))
+  );
+
+create policy "Users can delete their own items"
+  on public.items for delete
+  to authenticated
+  using ((select auth.uid()) = user_id);

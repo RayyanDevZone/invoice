@@ -36,15 +36,18 @@ const Wrapper = ({ label, hint, error, prefix, suffix, className = '', children 
   </div>
 );
 
-export const TextField = ({ label, hint, error, className, prefix, suffix, inputClassName = '', ...props }) => (
+export const TextField = React.forwardRef(({ label, hint, error, className, prefix, suffix, inputClassName = '', ...props }, ref) => (
   <Wrapper label={label} hint={hint} error={error} className={className} prefix={prefix} suffix={suffix}>
     <input
+      ref={ref}
       className={`${baseInput} ${prefix ? 'pl-7' : ''} ${suffix ? 'pr-10' : ''} ${error ? errorInput : ''} ${inputClassName}`}
       aria-invalid={error ? true : undefined}
       {...props}
     />
   </Wrapper>
-);
+));
+
+TextField.displayName = 'TextField';
 
 export const TextAreaField = ({ label, hint, className, inputClassName = '', ...props }) => (
   <Wrapper label={label} hint={hint} className={className}>

@@ -180,7 +180,7 @@ const PersonalInfo = () => {
           )}
         </>
       ) : (
-        <Card className="overflow-hidden">
+        <Card>
           <PartyForm
             title="Bill To"
             icon={LuUser}

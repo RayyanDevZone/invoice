@@ -8,13 +8,20 @@ import StepFooter from "../ui/StepFooter";
 import Button from "../ui/Button";
 import Select from "../ui/Select";
 import { TextField, TextAreaField } from "../ui/Field";
+import { unitOptions } from "../../utils/units";
+import { AuthContext } from "../../AuthContext";
+import PickItems from "./PickItems";
 
-const unitOptions = ["Kg", "Piece/Pieces", "Bag", "Box", "Quintal", "Tonne", "Bundle"].map((u) => ({
-  value: u,
-  label: u,
-}));
-
+// Signed in with a business: pick from its saved items. Otherwise: type items in.
 const ItemsLine = () => {
+  const { user } = useContext(AuthContext);
+  const { businesses, selectedBusinessId } = useContext(InvoiceContext);
+  const business = businesses.find((b) => b.id === selectedBusinessId);
+
+  return user && business ? <PickItems business={business} /> : <ManualItems />;
+};
+
+const ManualItems = () => {
   const navigate = useNavigate();
   const { invoiceData, setInvoiceData } = useContext(InvoiceContext);
 
