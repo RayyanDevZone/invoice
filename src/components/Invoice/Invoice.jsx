@@ -2,6 +2,10 @@ import React, { useContext } from "react";
 import { InvoiceContext } from "../../InvoiceContext";
 import num2words from 'num2words';
 
+// "City, State ZIP" with whichever parts are filled in.
+const formatLocality = ({ city, state, zip }) =>
+  [city, [state, zip].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+
 const Invoice = () => {
   const { invoiceData } = useContext(InvoiceContext);
   const qrCode = localStorage.getItem('qrCode') || '';
@@ -62,7 +66,7 @@ const Invoice = () => {
           <div className="logo h-[150px] flex overflow-hidden object-cover bg-center justify-center items-start flex-col">
             {logo && <img src={logo} alt="Logo" />}
           </div>
-          <h1 className="text-xl z-10 h-auto font-bold text-gray-900">{invoiceData.sender.name || "Company Name"}</h1>
+          <h1 className="text-xl z-10 h-auto font-bold text-gray-900">{invoiceData.sender.businessName || invoiceData.sender.name || "Company Name"}</h1>
         </div>
         <div className="address w-[50%] h-[100%] flex items-end justify-evenly flex-col">
           <div className="invoiceAndNumber flex flex-col items-end justify-center">
@@ -71,7 +75,7 @@ const Invoice = () => {
           </div>
           <div className="address flex flex-col items-end text-gray-600 text-[16px] font-semibold justify-center">
             <p>{invoiceData.sender.address}</p>
-            <p>{invoiceData.sender.city}{invoiceData.sender.city && invoiceData.sender.zip ? ', ' : ''}{invoiceData.sender.zip}</p>
+            <p>{formatLocality(invoiceData.sender)}</p>
             <p>{invoiceData.sender.country}</p>
             {invoiceData.sender.gstReg && <p className="text-gray-800">GSTIN: {invoiceData.sender.gstReg}</p>}
           </div>
@@ -83,7 +87,7 @@ const Invoice = () => {
           <p className="text-xl font-bold text-gray-800 mt-1">{invoiceData.receiver.name}</p>
           {invoiceData.receiver.gstReg && <p className="text-sm font-semibold text-gray-500">GSTIN: {invoiceData.receiver.gstReg}</p>}
           <p className="text-gray-600 font-semibold mt-1">{invoiceData.receiver.address}</p>
-          <p className="text-gray-600 font-semibold">{invoiceData.receiver.city}{invoiceData.receiver.city && invoiceData.receiver.zip ? ', ' : ''}{invoiceData.receiver.zip}</p>
+          <p className="text-gray-600 font-semibold">{formatLocality(invoiceData.receiver)}</p>
           <p className="text-gray-600 font-semibold">{invoiceData.receiver.country}</p>
         </div>
         <div className="invoiceDate w-[50%] h-full flex flex-col justify-start items-end gap-2 pt-1">
@@ -216,13 +220,16 @@ const Invoice = () => {
       <div className="contactDetails flex flex-row items-end justify-between h-[130px] w-full px-6 border-t border-gray-100 pt-4">
         <div>
           <p className="text-gray-500 text-sm">Questions about this invoice? Contact:</p>
+          {invoiceData.sender.businessName && invoiceData.sender.name && (
+            <p className="text-gray-700 text-sm font-semibold">{invoiceData.sender.name}</p>
+          )}
           <p className="text-gray-700 text-sm font-semibold">{invoiceData.sender.phone}</p>
           <p className="text-gray-700 text-sm font-semibold">{invoiceData.sender.email}</p>
         </div>
 
         <div className="signatory h-full w-[40%] flex flex-col text-center justify-end">
           <div className="border-t border-gray-300 pt-1">
-            <p className="text-xs text-gray-500">Authorised Signatory for {invoiceData.sender.name}</p>
+            <p className="text-xs text-gray-500">Authorised Signatory for {invoiceData.sender.businessName || invoiceData.sender.name}</p>
           </div>
         </div>
       </div>
