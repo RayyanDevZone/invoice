@@ -16,7 +16,7 @@ const WelcomePage = () => {
       <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="flex flex-col items-start text-left font-google-sans">
           <span className="text-xs font-bold tracking-wider uppercase text-brand-dark mb-3">
-            Free &middot; No sign-up
+            Free &middot; 
           </span>
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight">
             Create invoices <br /> in minutes
