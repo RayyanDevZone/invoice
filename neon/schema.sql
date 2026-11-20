@@ -1,12 +1,16 @@
--- Full schema for a fresh project. Run in the Supabase dashboard:
--- SQL Editor -> New query -> paste -> Run.
--- (Upgrading an existing project? Run the files in supabase/migrations instead.)
+-- BillEase database schema (Neon: Lakebase Postgres + Neon Auth + Data API).
+--   * user accounts live in neon_auth."user" (managed by Neon Auth)
+--   * auth.uid() returns the signed-in user's id from their login token
+--   * row-level security limits every user to their own rows
+--   * the `authenticated` role gets table access at the bottom of this file
+-- Apply to a fresh branch with: neon psql < neon/schema.sql
+-- (or paste it into Neon Console -> SQL Editor)
 
 -- A user's businesses: the "Bill From" details shown on their invoices.
 -- One user can have many businesses.
 create table if not exists public.businesses (
   id uuid primary key default gen_random_uuid(),
-  user_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  user_id uuid not null default auth.uid() references neon_auth."user" (id) on delete cascade,
   business_name text,
   name text, -- contact person
   address text,
@@ -58,7 +62,7 @@ create policy "Users can delete their own businesses"
 -- later invoices. Same columns as businesses.
 create table if not exists public.customers (
   id uuid primary key default gen_random_uuid(),
-  user_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  user_id uuid not null default auth.uid() references neon_auth."user" (id) on delete cascade,
   business_name text,
   name text, -- contact person
   address text,
@@ -102,7 +106,7 @@ create policy "Users can delete their own customers"
 -- Saved items (products / services). Each business has its own item list.
 create table if not exists public.items (
   id uuid primary key default gen_random_uuid(),
-  user_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  user_id uuid not null default auth.uid() references neon_auth."user" (id) on delete cascade,
   business_id uuid not null references public.businesses (id) on delete cascade,
   name text not null,
   hsn text, -- HSN / SAC code
@@ -145,3 +149,7 @@ create policy "Users can delete their own items"
   on public.items for delete
   to authenticated
   using ((select auth.uid()) = user_id);
+
+-- Data API access for signed-in users. RLS above still limits each user to their own rows.
+grant usage on schema public to authenticated;
+grant select, insert, update, delete on public.businesses, public.customers, public.items to authenticated;

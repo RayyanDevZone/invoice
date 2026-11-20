@@ -1,4 +1,4 @@
-import { supabase } from './supabase';
+import { client } from './neon';
 
 // Saved items (products / services) in the `items` table. Each item belongs
 // to one of the user's businesses.
@@ -22,7 +22,7 @@ const toRow = (item) => ({
 });
 
 export const fetchItems = async (businessId) => {
-  const { data, error } = await supabase
+  const { data, error } = await client
     .from('items')
     .select('*')
     .eq('business_id', businessId)
@@ -33,7 +33,7 @@ export const fetchItems = async (businessId) => {
 
 // user_id is filled in by the database from the signed-in user.
 export const createItem = async (businessId, item) => {
-  const { data, error } = await supabase
+  const { data, error } = await client
     .from('items')
     .insert({ ...toRow(item), business_id: businessId })
     .select()
@@ -43,12 +43,12 @@ export const createItem = async (businessId, item) => {
 };
 
 export const updateItem = async (id, item) => {
-  const { data, error } = await supabase.from('items').update(toRow(item)).eq('id', id).select().single();
+  const { data, error } = await client.from('items').update(toRow(item)).eq('id', id).select().single();
   if (error) throw error;
   return fromRow(data);
 };
 
 export const deleteItem = async (id) => {
-  const { error } = await supabase.from('items').delete().eq('id', id);
+  const { error } = await client.from('items').delete().eq('id', id);
   if (error) throw error;
 };

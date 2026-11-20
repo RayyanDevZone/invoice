@@ -1,4 +1,4 @@
-import { supabase } from './supabase';
+import { client } from './neon';
 
 // Maps the app's party fields (Bill From / Bill To) to table columns. The
 // `businesses` and `customers` tables share the same columns.
@@ -58,7 +58,7 @@ export const partyTable = (table, extraColumns = {}) => {
   return {
     // Oldest first, so the first one a user added stays at the top.
     fetchAll: async () => {
-      const { data, error } = await supabase
+      const { data, error } = await client
         .from(table)
         .select('*')
         .order('created_at', { ascending: true });
@@ -68,13 +68,13 @@ export const partyTable = (table, extraColumns = {}) => {
     },
 
     create: async (party) => {
-      const { data, error } = await supabase.from(table).insert(toRow(party)).select().single();
+      const { data, error } = await client.from(table).insert(toRow(party)).select().single();
       if (error) throw error;
       return fromRow(data);
     },
 
     update: async (id, party) => {
-      const { data, error } = await supabase
+      const { data, error } = await client
         .from(table)
         .update(toRow(party))
         .eq('id', id)
@@ -86,7 +86,7 @@ export const partyTable = (table, extraColumns = {}) => {
     },
 
     remove: async (id) => {
-      const { error } = await supabase.from(table).delete().eq('id', id);
+      const { error } = await client.from(table).delete().eq('id', id);
       if (error) throw error;
     },
   };

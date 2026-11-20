@@ -1,29 +1,16 @@
-import React, { createContext, useEffect, useState } from 'react';
-import { supabase } from './utils/supabase';
+import React, { createContext } from 'react';
+import { client } from './utils/neon';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [session, setSession] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // Neon Auth keeps this in sync after sign-in, email verification and sign-out.
+  const { data, isPending } = client.auth.useSession();
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setLoading(false);
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, newSession) => {
-      setSession(newSession);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const signOut = () => supabase.auth.signOut();
+  const signOut = () => client.auth.signOut();
 
   return (
-    <AuthContext.Provider value={{ session, user: session?.user ?? null, loading, signOut }}>
+    <AuthContext.Provider value={{ user: data?.user ?? null, loading: isPending, signOut }}>
       {children}
     </AuthContext.Provider>
   );

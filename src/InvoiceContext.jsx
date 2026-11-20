@@ -28,7 +28,7 @@ export const InvoiceProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
   const userId = user?.id;
 
-  // The signed-in user's businesses, loaded from Supabase. The invoice's
+  // The signed-in user's businesses, loaded from the database. The invoice's
   // "Bill From" (sender) is a copy of whichever business is selected.
   const [businesses, setBusinesses] = useState([]);
   const [selectedBusinessId, setSelectedBusinessId] = useState(null);
